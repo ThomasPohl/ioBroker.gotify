@@ -1,0 +1,76 @@
+{
+  "name": "iobroker.gotify",
+  "version": "0.0.1",
+  "description": "Send push notifications to gotify",
+  "author": {
+    "name": "Thomas Pohl",
+    "email": "post@thomaspohl.net"
+  },
+  "contributors": [
+    {
+      "name": "Thomas Pohl"
+    }
+  ],
+  "homepage": "https://github.com/ThomasPohl/ioBroker.gotify",
+  "license": "Apache-2.0",
+  "keywords": [
+    "gotify",
+    "notification",
+    "communication"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ThomasPohl/ioBroker.gotify"
+  },
+  "dependencies": {
+    "@iobroker/adapter-core": "^2.4.0"
+  },
+  "devDependencies": {
+    "@iobroker/testing": "^2.4.4",
+    "@types/chai": "^4.2.15",
+    "@types/chai-as-promised": "^7.1.3",
+    "@types/gulp": "^4.0.8",
+    "@types/mocha": "^8.2.1",
+    "@types/node": "^14.14.34",
+    "@types/proxyquire": "^1.3.28",
+    "@types/sinon": "^9.0.11",
+    "@types/sinon-chai": "^3.2.5",
+    "@typescript-eslint/eslint-plugin": "^4.17.0",
+    "@typescript-eslint/parser": "^4.17.0",
+    "axios": "^0.21.1",
+    "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^7.22.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "gulp": "^4.0.2",
+    "mocha": "^8.3.2",
+    "prettier": "^2.2.1",
+    "proxyquire": "^2.1.3",
+    "rimraf": "^3.0.2",
+    "sinon": "^9.2.4",
+    "sinon-chai": "^3.5.0",
+    "source-map-support": "^0.5.19",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
+  },
+  "main": "build/main.js",
+  "scripts": {
+    "prebuild": "rimraf ./build",
+    "build:ts": "tsc -p tsconfig.build.json",
+    "build": "npm run build:ts",
+    "watch:ts": "tsc -p tsconfig.build.json --watch",
+    "watch": "npm run watch:ts",
+    "test:ts": "mocha --config test/mocharc.custom.json src/**/*.test.ts",
+    "test:package": "mocha test/package --exit",
+    "test:unit": "mocha test/unit --exit",
+    "test:integration": "mocha test/integration --exit",
+    "test": "npm run test:ts && npm run test:package",
+    "check": "tsc --noEmit",
+    "lint": "eslint --ext .ts src/"
+  },
+  "bugs": {
+    "url": "https://github.com/ThomasPohl/ioBroker.gotify/issues"
+  },
+  "readmeFilename": "README.md"
+}

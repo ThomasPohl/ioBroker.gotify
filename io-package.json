@@ -1,0 +1,72 @@
+{
+    "common": {
+        "name": "gotify",
+        "version": "0.0.1",
+        "news": {
+            "0.0.1": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "zh-cn": "首次出版"
+            }
+        },
+        "title": "Gotify",
+        "titleLang": {
+            "en": "Gotify",
+            "de": "Gotify",
+            "ru": "Gotify",
+            "pt": "Gotify",
+            "nl": "Gotify",
+            "fr": "Gotify",
+            "it": "Gotify",
+            "es": "Gotify",
+            "pl": "Gotify",
+            "zh-cn": "Gotify"
+        },
+        "desc": {
+            "en": "Send push notifications to gotify",
+            "de": "Senden Sie Push-Benachrichtigungen an gotify",
+            "ru": "Отправлять push-уведомления на gotify",
+            "pt": "Enviar notificações push para gotify",
+            "nl": "Stuur pushmeldingen naar Gotify",
+            "fr": "Envoyer des notifications push à gotify",
+            "it": "Invia notifiche push a gotify",
+            "es": "Envía notificaciones push a gotify",
+            "pl": "Wysyłaj powiadomienia push do gotify",
+            "zh-cn": "发送推送通知以获取验证"
+        },
+        "authors": ["Thomas Pohl <post@thomaspohl.net>"],
+        "keywords": ["gotify", "notification", "communication"],
+        "license": "Apache-2.0",
+        "platform": "Javascript/Node.js",
+        "main": "build/main.js",
+        "icon": "gotify.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/ThomasPohl/ioBroker.gotify/master/admin/gotify.png",
+        "readme": "https://github.com/ThomasPohl/ioBroker.gotify/blob/master/README.md",
+        "loglevel": "info",
+        "mode": "daemon",
+        "type": "messaging",
+        "compact": true,
+        "connectionType": "cloud",
+        "dataSource": "push",
+        "materialize": true,
+        "dependencies": [
+            {
+                "js-controller": ">=2.0.0"
+            }
+        ]
+    },
+    "native": {
+        "option1": true,
+        "option2": "42"
+    },
+    "objects": [],
+    "instanceObjects": []
+}
