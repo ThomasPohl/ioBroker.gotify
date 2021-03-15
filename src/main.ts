@@ -5,6 +5,7 @@
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 import * as utils from "@iobroker/adapter-core";
+import axios from "axios";
 
 // Load your modules here, e.g.:
 // import * as fs from "fs";
@@ -148,6 +149,14 @@ class Gotify extends utils.Adapter {
 
     private sendMessage(message: GotifyMessage) {
         if (this.config.url && this.config.token) {
+            axios
+                .post(this.config.url + "?token=" + this.config.token, message)
+                .then(() => {
+                    this.log.debug("Successfully sent message to gotify");
+                })
+                .catch((error) => {
+                    this.log.error("Error while sending message to gotify:" + JSON.stringify(error));
+                });
         } else {
             this.log.error("Cannot send notification while not configured");
         }
