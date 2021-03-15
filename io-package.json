@@ -64,8 +64,8 @@
         ]
     },
     "native": {
-        "option1": true,
-        "option2": "42"
+        "url": "",
+        "token": ""
     },
     "objects": [],
     "instanceObjects": []
