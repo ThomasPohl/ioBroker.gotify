@@ -9,6 +9,12 @@ import * as utils from "@iobroker/adapter-core";
 // Load your modules here, e.g.:
 // import * as fs from "fs";
 
+interface GotifyMessage {
+    message?: string;
+    title?: string;
+    priority?: number;
+}
+
 class Gotify extends utils.Adapter {
     public constructor(options: Partial<utils.AdapterOptions> = {}) {
         super({
@@ -18,7 +24,7 @@ class Gotify extends utils.Adapter {
         this.on("ready", this.onReady.bind(this));
         this.on("stateChange", this.onStateChange.bind(this));
         // this.on("objectChange", this.onObjectChange.bind(this));
-        // this.on("message", this.onMessage.bind(this));
+        this.on("message", this.onMessage.bind(this));
         this.on("unload", this.onUnload.bind(this));
     }
 
@@ -32,6 +38,9 @@ class Gotify extends utils.Adapter {
         // this.config:
         this.log.info("config option1: " + this.config.url);
         this.log.info("config option2: " + this.config.token);
+        if (!this.supportsFeature || !this.supportsFeature("ADAPTER_AUTO_DECRYPT_NATIVE")) {
+            this.config.token = this.decrypt(this.config.token);
+        }
 
         /*
 		For every state in the system there has to be also an object of type state
@@ -127,22 +136,22 @@ class Gotify extends utils.Adapter {
         }
     }
 
-    // If you need to accept messages in your adapter, uncomment the following block and the corresponding line in the constructor.
-    // /**
-    //  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
-    //  * Using this method requires "common.messagebox" property to be set to true in io-package.json
-    //  */
-    // private onMessage(obj: ioBroker.Message): void {
-    //     if (typeof obj === "object" && obj.message) {
-    //         if (obj.command === "send") {
-    //             // e.g. send email or pushover or whatever
-    //             this.log.info("send command");
+    private onMessage(obj: ioBroker.Message): void {
+        if (typeof obj === "object" && obj.message) {
+            if (obj.command === "send") {
+                this.sendMessage(obj.message as GotifyMessage);
+                // Send response in callback if required
+                if (obj.callback) this.sendTo(obj.from, obj.command, "Message received", obj.callback);
+            }
+        }
+    }
 
-    //             // Send response in callback if required
-    //             if (obj.callback) this.sendTo(obj.from, obj.command, "Message received", obj.callback);
-    //         }
-    //     }
-    // }
+    private sendMessage(message: GotifyMessage) {
+        if (this.config.url && this.config.token) {
+        } else {
+            this.log.error("Cannot send notification while not configured");
+        }
+    }
 }
 
 if (require.main !== module) {

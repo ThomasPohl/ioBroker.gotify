@@ -57,6 +57,9 @@
         "connectionType": "cloud",
         "dataSource": "push",
         "materialize": true,
+        "blockly": true,
+        "messagebox": true,
+        "subscribe": "messagebox",
         "dependencies": [
             {
                 "js-controller": ">=2.0.0"
