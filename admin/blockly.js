@@ -21,21 +21,23 @@ Blockly.Translate =
     };
 
 /// --- SendTo gotify --------------------------------------------------
-Blockly.Words["gotify"] = { en: "gotify", de: "gotify", ru: "gotify" };
-Blockly.Words["gotify_message"] = { en: "message", de: "Meldung", ru: "сообщение" };
-Blockly.Words["gotify_title"] = { en: "title (optional)", de: "Betreff (optional)", ru: "заголовок (не обяз.)" };
-Blockly.Words["gotify_priority"] = { en: "priority", de: "Priorität", ru: "приоритет" };
+Blockly.Words["gotify"] = { en: "gotify", de: "gotify" };
+Blockly.Words["gotify_message"] = { en: "message", de: "Meldung" };
+Blockly.Words["gotify_title"] = { en: "title (optional)", de: "Betreff (optional)" };
+Blockly.Words["gotify_priority"] = { en: "priority", de: "Priorität" };
+Blockly.Words["gotify_prio_min"] = { en: "minimum", de: "Minimale Priorität" };
+Blockly.Words["gotify_prio_low"] = { en: "low", de: "Niedrige Priorität" };
+Blockly.Words["gotify_prio_default"] = { en: "default", de: "Normal" };
+Blockly.Words["gotify_prio_high"] = { en: "high priority", de: "Hohe Priorität" };
 
-Blockly.Words["gotify_anyInstance"] = { en: "all instances", de: "Alle Instanzen", ru: "На все драйвера" };
+Blockly.Words["gotify_anyInstance"] = { en: "all instances", de: "Alle Instanzen" };
 Blockly.Words["gotify_tooltip"] = {
     en: "Send message to gotify",
     de: "Sende eine Meldung über gotify",
-    ru: "Послать сообщение через gotify",
 };
 Blockly.Words["gotify_help"] = {
-    en: "https://github.com/ioBroker/ioBroker.gotify/blob/master/README.md",
-    de: "https://github.com/ioBroker/ioBroker.gotify/blob/master/README.md",
-    ru: "https://github.com/ioBroker/ioBroker.gotify/blob/master/README.md",
+    en: "https://github.com/ThomasPohl/ioBroker.gotify/blob/master/README.md",
+    de: "https://github.com/ThomasPohl/ioBroker.gotify/blob/master/README.md",
 };
 
 Blockly.Sendto.blocks["gotify"] =
@@ -82,10 +84,10 @@ Blockly.Blocks["gotify"] = {
             .appendField(Blockly.Translate("gotify_priority"))
             .appendField(
                 new Blockly.FieldDropdown([
-                    [Blockly.Translate("gotify_normal"), "4"],
-                    [Blockly.Translate("gotify_high"), "9"],
-                    [Blockly.Translate("gotify_quiet"), "1"],
-                    [Blockly.Translate("gotify_confirmation"), "2"],
+                    [Blockly.Translate("gotify_min"), "0"],
+                    [Blockly.Translate("gotify_low"), "1"],
+                    [Blockly.Translate("gotify_default"), "4"],
+                    [Blockly.Translate("gotify_high"), "8"],
                 ]),
                 "PRIORITY",
             );
