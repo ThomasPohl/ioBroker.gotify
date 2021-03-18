@@ -63,6 +63,10 @@ sendTo("gotify.0", "send", {
 The following diagramm illustrates how ioBroker sends push notifications to your smartphone.
 ![Communication diagram](img/iobroker.gotify-communication.png)
 
+Both the ioBroker and the smartphone app connect to the gotify server using REST. The mobile app keeps an open websocket to the gotify server to be able to receive new notification.
+
+When the ioBroker-adapter wants to push a notification it send a POST request to the Gotify server. The gotify server takes care of pushing the notification to the client.
+
 ## License
 
                                  Apache License
