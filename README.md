@@ -41,6 +41,22 @@ Send push notifications to gotify
 -   Enter the Url auf you installation
 -   Add the previously created token
 
+## Usage
+
+### Blockly
+
+To send messages using blockly. Just add the gotify block to your script:
+![Blockly](img/gotify.blockly.gif)
+
+### Javascript
+
+```javascript
+sendTo("gotify.0", "send", {
+    title: "DG lüften",
+    message: "Luftfeuchtigkeit im DG zu hoch!",
+});
+```
+
 ## Communication
 
 The following diagramm illustrates how ioBroker sends push notifications to your smartphone.
