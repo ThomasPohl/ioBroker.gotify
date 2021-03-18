@@ -14,7 +14,7 @@
 
 ## gotify adapter for ioBroker
 
-Send push notifications to gotify
+Send push notifications from [ioBroker](https://iobroker.net/) to [Gotify](https://gotify.net/)
 
 ## Changelog
 
@@ -29,6 +29,7 @@ Send push notifications to gotify
 -   Login with you user in gotify
 -   Create an application for ioBroker
 -   Note the token of your new application
+    ![new application](img/newApplication.png)
 
 ### In ioBroker
 
