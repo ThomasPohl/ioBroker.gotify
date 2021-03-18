@@ -22,6 +22,30 @@ Send push notifications to gotify
 
 -   (Thomas Pohl) initial release
 
+## Installation
+
+### Preparation
+
+-   Login with you user in gotify
+-   Create an application for ioBroker
+-   Note the token of your new application
+
+### In ioBroker
+
+-   Goto Adapter
+-   Click on github-cat-icon
+-   Go to Custom tab
+-   Enter https://github.com/ThomasPohl/ioBroker.gotify
+-   Install
+-   Create a new instance for the gotify-adapter
+-   Enter the Url auf you installation
+-   Add the previously created token
+
+## Communication
+
+The following diagramm illustrates how ioBroker sends push notifications to your smartphone.
+![Communication diagram](img/iobroker.gotify-communication.png)
+
 ## License
 
                                  Apache License
