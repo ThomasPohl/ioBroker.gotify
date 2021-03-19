@@ -29,6 +29,9 @@ Blockly.Words["gotify_prio_min"] = { en: "minimum", de: "Minimale Priorität" };
 Blockly.Words["gotify_prio_low"] = { en: "low", de: "Niedrige Priorität" };
 Blockly.Words["gotify_prio_default"] = { en: "default", de: "Normal" };
 Blockly.Words["gotify_prio_high"] = { en: "high priority", de: "Hohe Priorität" };
+Blockly.Words["gotify_format"] = { en: "format", de: "Format" };
+Blockly.Words["gotify_format_text"] = { en: "text", de: "Text" };
+Blockly.Words["gotify_format_markdown"] = { en: "markdown", de: "Markdown" };
 
 Blockly.Words["gotify_anyInstance"] = { en: "all instances", de: "Alle Instanzen" };
 Blockly.Words["gotify_tooltip"] = {
@@ -48,6 +51,8 @@ Blockly.Sendto.blocks["gotify"] =
     '         <shadow type="text">' +
     '             <field name="TEXT">text</field>' +
     "         </shadow>" +
+    "     </value>" +
+    '     <value name="FORMAT">' +
     "     </value>" +
     '     <value name="TITLE">' +
     "     </value>" +
@@ -79,6 +84,16 @@ Blockly.Blocks["gotify"] = {
             .appendField(new Blockly.FieldDropdown(options), "INSTANCE");
 
         this.appendValueInput("MESSAGE").appendField(Blockly.Translate("gotify_message"));
+
+        this.appendDummyInput("FORMAT")
+            .appendField(Blockly.Translate("gotify_format"))
+            .appendField(
+                new Blockly.FieldDropdown([
+                    [Blockly.Translate("gotify_format_text"), "text/plain"],
+                    [Blockly.Translate("gotify_format_markdown"), "text/markdown"],
+                ]),
+                "FORMAT",
+            );
 
         this.appendDummyInput("PRIORITY")
             .appendField(Blockly.Translate("gotify_priority"))
@@ -118,6 +133,9 @@ Blockly.JavaScript["gotify"] = function (block) {
 
     value = Blockly.JavaScript.valueToCode(block, "TITLE", Blockly.JavaScript.ORDER_ATOMIC);
     if (value) text += "   title: " + value + ",\n";
+
+    var format = block.getFieldValue("FORMAT");
+    if (format) text += "   contentType: '" + format + "',\n";
 
     text += "   message: " + message + "\n";
 

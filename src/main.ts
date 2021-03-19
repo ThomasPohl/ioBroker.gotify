@@ -9,6 +9,7 @@ interface GotifyMessage {
     message?: string;
     title?: string;
     priority?: number;
+    contentType?: string;
 }
 
 class Gotify extends utils.Adapter {
@@ -46,12 +47,6 @@ class Gotify extends utils.Adapter {
      */
     private onUnload(callback: () => void): void {
         try {
-            // Here you must clear all timeouts or intervals that may still be active
-            // clearTimeout(timeout1);
-            // clearTimeout(timeout2);
-            // ...
-            // clearInterval(interval1);
-
             callback();
         } catch (e) {
             callback();
@@ -71,7 +66,16 @@ class Gotify extends utils.Adapter {
     private sendMessage(message: GotifyMessage) {
         if (this.config.url && this.config.token) {
             axios
-                .post(this.config.url + "/message?token=" + this.config.token, message)
+                .post(this.config.url + "/message?token=" + this.config.token, {
+                    title: message.title,
+                    message: message.message,
+                    priority: message.priority,
+                    extras: {
+                        "client::display": {
+                            contentType: message.contentType,
+                        },
+                    },
+                })
                 .then(() => {
                     this.log.debug("Successfully sent message to gotify");
                 })

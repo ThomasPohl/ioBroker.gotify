@@ -58,11 +58,6 @@ class Gotify extends utils.Adapter {
      */
     onUnload(callback) {
         try {
-            // Here you must clear all timeouts or intervals that may still be active
-            // clearTimeout(timeout1);
-            // clearTimeout(timeout2);
-            // ...
-            // clearInterval(interval1);
             callback();
         }
         catch (e) {
@@ -82,7 +77,16 @@ class Gotify extends utils.Adapter {
     sendMessage(message) {
         if (this.config.url && this.config.token) {
             axios_1.default
-                .post(this.config.url + "/message?token=" + this.config.token, message)
+                .post(this.config.url + "/message?token=" + this.config.token, {
+                title: message.title,
+                message: message.message,
+                priority: message.priority,
+                extras: {
+                    "client::display": {
+                        contentType: message.contentType,
+                    },
+                },
+            })
                 .then(() => {
                 this.log.debug("Successfully sent message to gotify");
             })
