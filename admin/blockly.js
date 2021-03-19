@@ -99,10 +99,10 @@ Blockly.Blocks["gotify"] = {
             .appendField(Blockly.Translate("gotify_priority"))
             .appendField(
                 new Blockly.FieldDropdown([
-                    [Blockly.Translate("gotify_min"), "0"],
-                    [Blockly.Translate("gotify_low"), "1"],
-                    [Blockly.Translate("gotify_default"), "4"],
-                    [Blockly.Translate("gotify_high"), "8"],
+                    [Blockly.Translate("gotify_prio_min"), "0"],
+                    [Blockly.Translate("gotify_prio_low"), "1"],
+                    [Blockly.Translate("gotify_prio_default"), "4"],
+                    [Blockly.Translate("gotify_prio_high"), "8"],
                 ]),
                 "PRIORITY",
             );
