@@ -1,6 +1,6 @@
 {
   "name": "iobroker.gotify",
-  "version": "0.0.1",
+  "version": "0.0.2-RC1.0",
   "description": "Send push notifications to gotify",
   "author": {
     "name": "Thomas Pohl",
