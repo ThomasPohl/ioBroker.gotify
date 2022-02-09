@@ -5,19 +5,19 @@
         "news": {
             "0.0.1": {
                 "en": "initial release",
-                "de": "Erstveröffentlichung",
+                "de": "Erstveröffentlichung"
 
             }
         },
         "title": "Gotify",
         "titleLang": {
             "en": "Gotify",
-            "de": "Gotify",
+            "de": "Gotify"
 
         },
         "desc": {
             "en": "This adapter allows you to send push notifications using gotify",
-            "de": "Dieser Adapter ermöglicht das Versenden von Push-Benachrichtigungen über gotify",
+            "de": "Dieser Adapter ermöglicht das Versenden von Push-Benachrichtigungen über gotify"
         },
         "authors": ["Thomas Pohl <post@thomaspohl.net>"],
         "keywords": ["gotify", "notification", "communication"],
