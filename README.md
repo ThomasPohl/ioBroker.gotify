@@ -25,6 +25,7 @@ Send push notifications from [ioBroker](https://iobroker.net/) to [Gotify](https
 -   (Thomas Pohl) Update to adapter-core 2.5.1
 
 ### **WORK IN PROGRESS**
+-   (Thomas Pohl) Update dependencies
 
 ## Installation
 
