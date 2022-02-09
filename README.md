@@ -6,7 +6,6 @@
 [![Downloads](https://img.shields.io/npm/dm/iobroker.gotify.svg)](https://www.npmjs.com/package/iobroker.gotify)
 ![Number of Installations (latest)](https://iobroker.live/badges/gotify-installed.svg)
 ![Number of Installations (stable)](https://iobroker.live/badges/gotify-stable.svg)
-[![Dependency Status](https://img.shields.io/david/ThomasPohl/iobroker.gotify.svg)](https://david-dm.org/ThomasPohl/iobroker.gotify)
 
 [![NPM](https://nodei.co/npm/iobroker.gotify.png?downloads=true)](https://nodei.co/npm/iobroker.gotify/)
 
