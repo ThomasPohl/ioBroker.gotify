@@ -22,6 +22,9 @@ Send push notifications from [ioBroker](https://iobroker.net/) to [Gotify](https
 
 -   (Thomas Pohl) initial release
 
+### 0.1.0
+-   (Thomas Pohl) Update to adapter-core 2.5.1
+
 ## Installation
 
 ### Preparation
@@ -274,3 +277,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 Copyright (c) 2022 Thomas Pohl <post@thomaspohl.net>
+
