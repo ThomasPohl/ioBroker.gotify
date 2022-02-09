@@ -47,7 +47,9 @@ Send push notifications from [ioBroker](https://iobroker.net/) to [Gotify](https
 ### Blockly
 
 To send messages using blockly. Just add the gotify block to your script:
-![Blockly](img/gotify.blockly.gif)
+![Blockly](img/gotify.blockly.png)
+
+If yoou choose Markdown as format you can use [Markdown](https://guides.github.com/features/mastering-markdown/) to format your messages.
 
 ### Javascript
 
