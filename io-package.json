@@ -1,18 +1,30 @@
 {
     "common": {
         "name": "gotify",
-        "version": "0.0.2-RC1.0",
+        "version": "0.1.0",
         "news": {
             "0.0.1": {
                 "en": "initial release",
                 "de": "Erstveröffentlichung"
 
+            },
+            "0.1.0": {
+                "en": "Update to adapter-core 2.5.1",
+                "de": "Update iauf adapter-core 2.5.1"
             }
         },
-        "title": "Gotify",
         "titleLang": {
             "en": "Gotify",
-            "de": "Gotify"
+            "de": "Gotify",
+            "ru": "Gotify",
+            "pt": "Gotify",
+            "nl": "Gotify",
+            "fr": "Gotify",
+            "it": "Gotify",
+            "es": "Gotify",
+            "pl": "Gotify",
+            "uk": "Gotify",
+            "zh-cn": "Gotify"
 
         },
         "desc": {
