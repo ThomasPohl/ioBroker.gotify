@@ -5,7 +5,16 @@
         "news": {
             "0.0.1": {
                 "en": "initial release",
-                "de": "Erstveröffentlichung"
+                "de": "Erstveröffentlichung",
+                "ru": "начальный выпуск",
+                "pt": "lançamento inicial",
+                "nl": "niet",
+                "fr": "initial release",
+                "it": "rilascio iniziale",
+                "es": "liberación inicial",
+                "pl": "pierwsze wydanie",
+                "uk": "початковий реліз",
+                "zh-cn": "初步释放"
 
             },
             "0.1.0": {
@@ -29,7 +38,16 @@
         },
         "desc": {
             "en": "This adapter allows you to send push notifications using gotify",
-            "de": "Dieser Adapter ermöglicht das Versenden von Push-Benachrichtigungen über gotify"
+            "de": "Dieser Adapter ermöglicht das Versenden von Push-Benachrichtigungen über gotify",
+            "ru": "Этот адаптер позволяет отправлять push-уведомления с помощью gotify",
+            "pt": "Este adaptador permite que você envie notificações push usando gotify",
+            "nl": "Deze adapter laat je inlichtingen sturen met behulp van versterking",
+            "fr": "Cet adaptateur vous permet d'envoyer des notifications push en utilisant gotify",
+            "it": "Questo adattatore consente di inviare notifiche push utilizzando gotify",
+            "es": "Este adaptador le permite enviar notificaciones push usando gotify",
+            "pl": "Ta adapter pozwala na wysłanie powiadomień o użyciu gotyfikacji",
+            "uk": "Цей адаптер дозволяє надсилати повідомлення на поштовх, використовуючи",
+            "zh-cn": "这种适应者使你能够向你发出动议的通知,以便你能够通过批准。"
         },
         "authors": ["Thomas Pohl <post@thomaspohl.net>"],
         "keywords": ["gotify", "notification", "communication"],
