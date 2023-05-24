@@ -15,11 +15,19 @@
                 "pl": "pierwsze wydanie",
                 "uk": "початковий реліз",
                 "zh-cn": "初步释放"
-
             },
             "0.1.0": {
                 "en": "Update to adapter-core 2.5.1",
-                "de": "Update iauf adapter-core 2.5.1"
+                "de": "Update auf adapter-core 2.5.1",
+                "ru": "Обновление до ядра адаптера 2.5.1",
+                "pt": "Atualização para adaptador-core 2.5.1",
+                "nl": "Update naar adapter-core 2.5.1",
+                "fr": "Mise à jour vers adapter-core 2.5.1",
+                "it": "Aggiornamento a adapter-core 2.5.1",
+                "es": "Actualizar a adaptador-core 2.5.1",
+                "pl": "Aktualizacja do rdzenia adaptera 2.5.1",
+                "uk": "Оновлення до адаптера ядра 2.5.1",
+                "zh-cn": "更新到适配器核心 2.5.1"
             }
         },
         "titleLang": {
@@ -34,7 +42,6 @@
             "pl": "Gotify",
             "uk": "Gotify",
             "zh-cn": "Gotify"
-
         },
         "desc": {
             "en": "This adapter allows you to send push notifications using gotify",
@@ -49,8 +56,14 @@
             "uk": "Цей адаптер дозволяє надсилати повідомлення на поштовх, використовуючи",
             "zh-cn": "这种适应者使你能够向你发出动议的通知,以便你能够通过批准。"
         },
-        "authors": ["Thomas Pohl <post@thomaspohl.net>"],
-        "keywords": ["gotify", "notification", "communication"],
+        "authors": [
+            "Thomas Pohl <post@thomaspohl.net>"
+        ],
+        "keywords": [
+            "gotify",
+            "notification",
+            "communication"
+        ],
         "license": "Apache-2.0",
         "platform": "Javascript/Node.js",
         "main": "build/main.js",

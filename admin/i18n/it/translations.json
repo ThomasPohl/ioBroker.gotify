@@ -1,7 +1,7 @@
 {
-    "Token": "",
-    "Token of application": "",
-    "Url": "",
-    "Url of Gotify server - http(s)://host(:port)": "",
-    "gotify adapter settings": ""
+    "Token": "Gettone",
+    "Token of application": "Token di applicazione",
+    "Url": "Url",
+    "Url of Gotify server - http(s)://host(:port)": "URL del server Gotify - http(s)://host(:port)",
+    "gotify adapter settings": "Impostazioni dell'adattatore per gotify"
 }

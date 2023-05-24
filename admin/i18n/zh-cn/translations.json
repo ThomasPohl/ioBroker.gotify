@@ -1,7 +1,7 @@
 {
-    "Token": "",
-    "Token of application": "",
-    "Url": "",
-    "Url of Gotify server - http(s)://host(:port)": "",
-    "gotify adapter settings": ""
+    "Token": "代币",
+    "Token of application": "应用令牌",
+    "Url": "网址",
+    "Url of Gotify server - http(s)://host(:port)": "Gotify 服务器的 URL - http(s)://host(:port)",
+    "gotify adapter settings": "gotify 的适配器设置"
 }
