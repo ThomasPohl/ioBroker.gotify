@@ -70,6 +70,7 @@ class Gotify extends utils.Adapter {
                     title: message.title,
                     message: message.message,
                     priority: message.priority,
+                    timeout: 1000,
                     extras: {
                         "client::display": {
                             contentType: message.contentType,
