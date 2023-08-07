@@ -16,19 +16,18 @@
 Send push notifications from [ioBroker](https://iobroker.net/) to [Gotify](https://gotify.net/)
 
 ## Changelog
-### 0.0.2-RC1.0 (2022-02-09)
--   (Thomas Pohl) Update dependencies
-
-### 0.0.1
-
--   (Thomas Pohl) initial release
+### 0.2.0
+-   (Thomas Pohl) Add timeout for http calls
+-   (Thomas Pohl) Update dependency versions
 
 ### 0.1.0
 -   (Thomas Pohl) Update to adapter-core 2.5.1
 
-### 0.2.0
--   (Thomas Pohl) Add timeout for http calls
--   (Thomas Pohl) Update dependency versions
+### 0.0.2-RC1.0 (2022-02-09)
+-   (Thomas Pohl) Update dependencies
+
+### 0.0.1
+-   (Thomas Pohl) initial release
 
 ## Installation
 
