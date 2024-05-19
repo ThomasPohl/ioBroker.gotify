@@ -36,6 +36,11 @@ class Gotify extends utils.Adapter {
         if (!this.supportsFeature || !this.supportsFeature("ADAPTER_AUTO_DECRYPT_NATIVE")) {
             this.config.token = this.decrypt(this.config.token);
         }
+        if (this.config.url && this.config.token) {
+            this.log.info("Gotify adapter configured");
+        } else {
+            this.terminate("Gotify adapter not configured", utils.EXIT_CODES.INVALID_ADAPTER_CONFIG);
+        }
     }
 
     /**
