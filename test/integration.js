@@ -33,18 +33,31 @@ tests.integration(path.join(__dirname, ".."), {
                     console.log("Starting adapter...");
                     // Start the adapter and wait until it has started
                     await harness
-                        .startAdapterAndWait(true)
+                        .startAdapterAndWait()
                         .then(() => {
                             console.log("Adapter started");
-                            reject();
+                            //Get state info.connection
+                            harness.states
+                                .getState("gotify.0.info.connection")
+                                .then((state) => {
+                                    console.log("State info.connection: " + JSON.stringify(state));
+                                    if (state && state.val === true) {
+                                        console.log(
+                                            "Connection established - should not happen - adapter is not configured",
+                                        );
+                                        reject();
+                                    } else {
+                                        resolve();
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.log("Adapter not started: " + error);
+                                    reject();
+                                });
                         })
                         .catch((error) => {
-                            if (error.message === "The adapter startup was interrupted unexpectedly with code 2") {
-                                resolve();
-                            } else {
-                                console.error("Error starting adapter: " + error.message);
-                                reject();
-                            }
+                            console.log("Adapter not started: " + error);
+                            reject();
                         });
                 });
             });
