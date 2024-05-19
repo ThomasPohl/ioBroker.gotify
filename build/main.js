@@ -36,9 +36,11 @@ class Gotify extends utils.Adapter {
       this.config.token = this.decrypt(this.config.token);
     }
     if (this.config.url && this.config.token) {
+      this.setState("info.connection", true, true);
       this.log.info("Gotify adapter configured");
     } else {
-      this.terminate("Gotify adapter not configured", utils.EXIT_CODES.INVALID_ADAPTER_CONFIG);
+      this.setState("info.connection", false, true);
+      this.log.warn("Gotify adapter not configured");
     }
   }
   onUnload(callback) {

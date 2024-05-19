@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
     iobroker:
@@ -6,8 +6,8 @@ services:
         container_name: iobroker-gotify
         hostname: iobroker-gotify
         # This port is only internal, so we can work on this while another instance of ioBroker is running on the host
-        expose:
-            - 8081
+        ports:
+            - 8081:8081
         volumes:
             - ..:/workspace:cached
             - iobrokerdata-gotify:/opt/iobroker

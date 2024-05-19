@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "gotify",
-        "version": "0.2.0",
+        "version": "0.2.1",
         "news": {
+            "0.2.1": {
+                "en": "Optimized startup behavior when adapter is not configured",
+                "de": "Optimiertes Startverhalten, wenn der Adapter nicht konfiguriert ist",
+                "ru": "Оптимизировано поведение при запуске, когда адаптер не настроен.",
+                "pt": "Comportamento de inicialização otimizado quando o adaptador não está configurado",
+                "nl": "Geoptimaliseerd opstartgedrag wanneer de adapter niet is geconfigureerd",
+                "fr": "Comportement de démarrage optimisé lorsque l'adaptateur n'est pas configuré",
+                "it": "Comportamento di avvio ottimizzato quando l'adattatore non è configurato",
+                "es": "Comportamiento de inicio optimizado cuando el adaptador no está configurado",
+                "pl": "Zoptymalizowane zachowanie podczas uruchamiania, gdy adapter nie jest skonfigurowany",
+                "uk": "Оптимізовано поведінку при запуску, коли адаптер не налаштовано",
+                "zh-cn": "优化未配置适配器时的启动行为"
+            },
             "0.0.1": {
                 "en": "initial release",
                 "de": "Erstveröffentlichung",
@@ -69,19 +82,12 @@
             "uk": "Цей адаптер дозволяє надсилати повідомлення на поштовх, використовуючи",
             "zh-cn": "这种适应者使你能够向你发出动议的通知,以便你能够通过批准。"
         },
-        "authors": [
-            "Thomas Pohl <post@thomaspohl.net>"
-        ],
-        "keywords": [
-            "gotify",
-            "notification",
-            "communication"
-        ],
+        "authors": ["Thomas Pohl <post@thomaspohl.net>"],
+        "keywords": ["gotify", "notification", "communication"],
         "license": "Apache-2.0",
         "platform": "Javascript/Node.js",
         "main": "build/main.js",
         "icon": "gotify.png",
-        "enabled": true,
         "extIcon": "https://raw.githubusercontent.com/ThomasPohl/ioBroker.gotify/master/admin/gotify.png",
         "readme": "https://github.com/ThomasPohl/ioBroker.gotify/blob/master/README.md",
         "loglevel": "info",
@@ -89,11 +95,13 @@
         "type": "messaging",
         "compact": true,
         "connectionType": "cloud",
+        "role": "indicator.connected",
         "dataSource": "push",
         "materialize": true,
         "blockly": true,
         "messagebox": true,
         "subscribe": "messagebox",
+        "stopBeforeUpdate": true,
         "dependencies": [
             {
                 "js-controller": ">=2.0.0"
@@ -105,5 +113,29 @@
         "token": ""
     },
     "objects": [],
-    "instanceObjects": []
+    "instanceObjects": [
+        {
+            "_id": "info.connection",
+            "type": "state",
+            "common": {
+                "name": {
+                    "en": "Connected to Gotify server",
+                    "de": "Verbindung mit Gotify Server",
+                    "ru": "Подключен к серверу Gotify",
+                    "pt": "Conectado ao servidor Gotify",
+                    "nl": "Verbinding met Gotify server",
+                    "fr": "Connecté au serveur Gotify",
+                    "it": "Collegato al server Gotify",
+                    "es": "Conectado al servidor Gotify",
+                    "pl": "Łączy się z serwerem Gotify"
+                },
+                "type": "boolean",
+                "role": "indicator.connected",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        }
+    ]
 }
