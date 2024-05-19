@@ -63,7 +63,7 @@ class Gotify extends utils.Adapter {
         }
     }
 
-    private sendMessage(message: GotifyMessage) {
+    private sendMessage(message: GotifyMessage): void {
         if (this.config.url && this.config.token) {
             axios
                 .post(this.config.url + "/message?token=" + this.config.token, {
