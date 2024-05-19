@@ -9,4 +9,5 @@ declare global {
 }
 
 // this is required so the above AdapterConfig is found by TypeScript / type checking
-export {};
+export { };
+

@@ -35,9 +35,6 @@ class Gotify extends utils.Adapter {
     if (!this.supportsFeature || !this.supportsFeature("ADAPTER_AUTO_DECRYPT_NATIVE")) {
       this.config.token = this.decrypt(this.config.token);
     }
-    if (!this.config.url || !this.config.token) {
-      this.log.error("Cannot send notification while not configured");
-    }
   }
   onUnload(callback) {
     try {
@@ -61,6 +58,7 @@ class Gotify extends utils.Adapter {
         title: message.title,
         message: message.message,
         priority: message.priority,
+        timeout: 1e3,
         extras: {
           "client::display": {
             contentType: message.contentType
@@ -72,7 +70,7 @@ class Gotify extends utils.Adapter {
         this.log.error("Error while sending message to gotify:" + JSON.stringify(error));
       });
     } else {
-      this.log.error("Cannot send notification while not configured");
+      this.log.error("Cannot send notification while not configured:" + JSON.stringify(message));
     }
   }
 }
