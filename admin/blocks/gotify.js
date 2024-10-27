@@ -1,3 +1,5 @@
+"use strict";
+
 /// --- SendTo gotify --------------------------------------------------
 Blockly.Words["gotify"] = { en: "gotify", de: "gotify" };
 Blockly.Words["gotify_message"] = { en: "message", de: "Meldung" };

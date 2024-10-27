@@ -19,4 +19,4 @@ function loadJS(filename) {
         console.error("Cannot load " + filename + ": " + e);
     }
 }
-loadJS("../google-spreadsheet/blocks/gotify.js");
+loadJS("../gotify/blocks/gotify.js");
