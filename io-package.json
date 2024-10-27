@@ -99,14 +99,21 @@
         "connectionType": "cloud",
         "role": "indicator.connected",
         "dataSource": "push",
-        "materialize": true,
         "blockly": true,
         "messagebox": true,
         "stopBeforeUpdate": true,
         "tier": 2,
+        "adminUI": {
+            "config": "json"
+        },
         "dependencies": [
             {
                 "js-controller": ">=5.0.19"
+            }
+        ],
+        "globalDependencies": [
+            {
+                "admin": ">=5.0.0"
             }
         ]
     },

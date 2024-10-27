@@ -1,0 +1,33 @@
+{
+    "i18n": true,
+    "type": "tabs",
+    "tabsStyle": {
+        "width": "calc(100% - 100px)"
+    },
+    "items": {
+        "_options": {
+            "type": "panel",
+            "label": "Main settings",
+            "items": {
+                "url": {
+                    "newLine": true,
+                    "type": "text",
+                    "sm": 12,
+                    "md": 8,
+                    "lg": 8,
+                    "label": "url",
+                    "help": "urlHelp"
+                },
+                "token": {
+                    "newLine": true,
+                    "type": "text",
+                    "sm": 12,
+                    "md": 8,
+                    "lg": 8,
+                    "label": "token",
+                    "help": "tokenHelp"
+                }
+            }
+        }
+    }
+}
