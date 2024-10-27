@@ -84,9 +84,11 @@
         },
         "authors": ["Thomas Pohl <post@thomaspohl.net>"],
         "keywords": ["gotify", "notification", "communication"],
-        "license": "Apache-2.0",
+        "licenseInformation": {
+            "license": "Apache-2.0",
+            "type": "free"
+        },
         "platform": "Javascript/Node.js",
-        "main": "build/main.js",
         "icon": "gotify.png",
         "extIcon": "https://raw.githubusercontent.com/ThomasPohl/ioBroker.gotify/master/admin/gotify.png",
         "readme": "https://github.com/ThomasPohl/ioBroker.gotify/blob/master/README.md",
@@ -100,11 +102,11 @@
         "materialize": true,
         "blockly": true,
         "messagebox": true,
-        "subscribe": "messagebox",
         "stopBeforeUpdate": true,
+        "tier": 2,
         "dependencies": [
             {
-                "js-controller": ">=2.0.0"
+                "js-controller": ">=5.0.19"
             }
         ]
     },
