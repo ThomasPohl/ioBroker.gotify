@@ -16,18 +16,18 @@
                 "uk": "Оптимізовано поведінку при запуску, коли адаптер не налаштовано",
                 "zh-cn": "优化未配置适配器时的启动行为"
             },
-            "0.0.1": {
-                "en": "initial release",
-                "de": "Erstveröffentlichung",
-                "ru": "начальный выпуск",
-                "pt": "lançamento inicial",
-                "nl": "niet",
-                "fr": "initial release",
-                "it": "rilascio iniziale",
-                "es": "liberación inicial",
-                "pl": "pierwsze wydanie",
-                "uk": "початковий реліз",
-                "zh-cn": "初步释放"
+            "0.2.0": {
+                "en": "Added timeout for http calls and updated dependency versions",
+                "de": "Timeout für http-Aufrufe hinzugefügt und Abhängigkeitsversionen aktualisiert",
+                "ru": "Добавлен тайм-аут для http-вызовов и обновлены версии зависимостей.",
+                "pt": "Adicionado tempo limite para chamadas http e versões de dependência atualizadas",
+                "nl": "Time-out toegevoegd voor http-oproepen en bijgewerkte afhankelijkheidsversies",
+                "fr": "Ajout d'un délai d'attente pour les appels http et mises à jour des versions de dépendance",
+                "it": "Aggiunto timeout per le chiamate http e versioni aggiornate delle dipendenze",
+                "es": "Tiempo de espera agregado para llamadas http y versiones de dependencia actualizadas",
+                "pl": "Dodano limit czasu dla wywołań HTTP i zaktualizowano wersje zależności",
+                "uk": "Додано час очікування для http-викликів і оновлені версії залежностей",
+                "zh-cn": "添加了 http 调用的超时并更新了依赖版本"
             },
             "0.1.0": {
                 "en": "Update to adapter-core 2.5.1",
@@ -41,19 +41,6 @@
                 "pl": "Aktualizacja do rdzenia adaptera 2.5.1",
                 "uk": "Оновлення до адаптера ядра 2.5.1",
                 "zh-cn": "更新到适配器核心 2.5.1"
-            },
-            "0.2.0": {
-                "en": "Added timeout for http calls and updated dependency versions",
-                "de": "Timeout für http-Aufrufe hinzugefügt und Abhängigkeitsversionen aktualisiert",
-                "ru": "Добавлен тайм-аут для http-вызовов и обновлены версии зависимостей.",
-                "pt": "Adicionado tempo limite para chamadas http e versões de dependência atualizadas",
-                "nl": "Time-out toegevoegd voor http-oproepen en bijgewerkte afhankelijkheidsversies",
-                "fr": "Ajout d'un délai d'attente pour les appels http et mises à jour des versions de dépendance",
-                "it": "Aggiunto timeout per le chiamate http e versioni aggiornate delle dipendenze",
-                "es": "Tiempo de espera agregado para llamadas http y versiones de dependencia actualizadas",
-                "pl": "Dodano limit czasu dla wywołań HTTP i zaktualizowano wersje zależności",
-                "uk": "Додано час очікування для http-викликів і оновлені версії залежностей",
-                "zh-cn": "添加了 http 调用的超时并更新了依赖版本"
             }
         },
         "titleLang": {
