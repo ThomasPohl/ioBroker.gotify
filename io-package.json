@@ -109,7 +109,6 @@
         "token": ""
     },
     "protectedNative": ["token"],
-    "encryptedNative": ["token"],
     "objects": [],
     "instanceObjects": [
         {
