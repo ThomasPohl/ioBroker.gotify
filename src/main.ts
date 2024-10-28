@@ -67,6 +67,7 @@ class Gotify extends utils.Adapter {
         try {
             callback();
         } catch (e) {
+            this.log.error("Error during unload: " + JSON.stringify(e));
             callback();
         }
     }
