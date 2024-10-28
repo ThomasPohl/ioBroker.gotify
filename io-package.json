@@ -3,6 +3,19 @@
         "name": "gotify",
         "version": "0.3.0",
         "news": {
+            "0.3.0": {
+                "en": "The token is now stored encrypted",
+                "de": "Der Token wird nun verschlüsselt gespeichert",
+                "ru": "Токен теперь хранится в зашифрованном виде.",
+                "pt": "O token agora é armazenado criptografado",
+                "nl": "Het token wordt nu versleuteld opgeslagen",
+                "fr": "Le token est désormais stocké crypté",
+                "it": "Il token è ora archiviato crittografato",
+                "es": "El token ahora se almacena cifrado",
+                "pl": "Token jest teraz przechowywany w postaci zaszyfrowanej",
+                "uk": "Тепер маркер зберігається в зашифрованому вигляді",
+                "zh-cn": "令牌现在已加密存储"
+            },
             "0.2.1": {
                 "en": "Optimized startup behavior when adapter is not configured",
                 "de": "Optimiertes Startverhalten, wenn der Adapter nicht konfiguriert ist",

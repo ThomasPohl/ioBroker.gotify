@@ -17,6 +17,11 @@ Send push notifications from [ioBroker](https://iobroker.net/) to [Gotify](https
 
 ## Changelog
 
+### 0.3.0
+
+-   (Thomas Pohl) The token is stored now encrypted
+-   (Thomas Pohl) node.js 22 is supported
+
 ### 0.2.1
 
 -   (Thomas Pohl) Optimized startup behavior when adapter is not configured
