@@ -49,6 +49,20 @@ class Gotify extends utils.Adapter {
       this.setState("info.connection", false, true);
       this.log.warn("Gotify adapter not configured");
     }
+    this.encryptPrivateKeyIfNeeded();
+  }
+  encryptPrivateKeyIfNeeded() {
+    if (this.config.token && this.config.token.length > 0) {
+      this.getForeignObjectAsync(`system.adapter.${this.name}.${this.instance}`).then((data) => {
+        if (data && data.native && data.native.token && !data.native.token.startsWith("$/aes")) {
+          this.config.token = data.native.privateKey;
+          data.native.token = this.encrypt(data.native.token);
+          this.extendForeignObjectAsync(`system.adapter.${this.name}.${this.instance}`, data).then(
+            () => this.log.info("privateKey is stored now encrypted")
+          );
+        }
+      });
+    }
   }
   /**
    * Is called when adapter shuts down - callback has to be called under any circumstances!
