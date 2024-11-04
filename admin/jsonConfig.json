@@ -12,18 +12,22 @@
                 "url": {
                     "newLine": true,
                     "type": "text",
+                    "xs": 12,
                     "sm": 12,
                     "md": 8,
                     "lg": 8,
+                    "xl": 8,
                     "label": "url",
                     "help": "urlHelp"
                 },
                 "token": {
                     "newLine": true,
                     "type": "text",
+                    "xs": 12,
                     "sm": 12,
                     "md": 8,
                     "lg": 8,
+                    "xl": 8,
                     "label": "token",
                     "help": "tokenHelp"
                 }
