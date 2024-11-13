@@ -78,8 +78,44 @@ class Gotify extends utils.Adapter {
                 this.sendMessage(obj.message as GotifyMessage);
                 // Send response in callback if required
                 if (obj.callback) this.sendTo(obj.from, obj.command, "Message received", obj.callback);
+            } else if (obj.command === "sendNotification") {
+                this.processNotification(obj);
             }
         }
+    }
+
+    private processNotification(obj: ioBroker.Message): void {
+        const notificationMessage: GotifyMessage = this.formatNotification(obj.message);
+        try {
+            this.sendMessage(notificationMessage);
+            if (obj.callback) {
+                this.sendTo(obj.from, "sendNotification", { sent: true }, obj.callback);
+            }
+        } catch {
+            if (obj.callback) {
+                this.sendTo(obj.from, "sendNotification", { sent: false }, obj.callback);
+            }
+        }
+    }
+
+    private formatNotification(notification: any): GotifyMessage {
+        const instances = notification.category.instances as Map<string, any>;
+        const readableInstances = Object.entries(instances).map(
+            ([instance, entry]) =>
+                `${instance.substring("system.adapter.".length)}: ${this.getLatestMessage(entry.messages)}`,
+        );
+
+        const text = `${notification.category.description}
+        ${notification.host}:
+        ${readableInstances.join("\n")}
+            `;
+
+        return {
+            message: text,
+            title: notification.category.name,
+            priority: notification.severity,
+            contentType: notification.contentType,
+        };
     }
 
     private sendMessage(message: GotifyMessage): void {
@@ -105,6 +141,11 @@ class Gotify extends utils.Adapter {
         } else {
             this.log.error("Cannot send notification while not configured:" + JSON.stringify(message));
         }
+    }
+    private getLatestMessage(messages: any): string {
+        const latestMessage = messages.sort((a: any, b: any) => (a.ts < b.ts ? 1 : -1))[0];
+
+        return `${new Date(latestMessage.ts).toLocaleString()} ${latestMessage.message}`;
     }
 }
 

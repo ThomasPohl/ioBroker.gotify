@@ -115,7 +115,11 @@
             {
                 "admin": ">=5.0.0"
             }
-        ]
+        ],
+        "supportedMessages": {
+            "custom": true,
+            "notifications": true
+        }
     },
     "native": {
         "url": "",
