@@ -113,9 +113,22 @@ class Gotify extends utils.Adapter {
         return {
             message: text,
             title: notification.category.name,
-            priority: notification.severity,
-            contentType: notification.contentType,
+            priority: this.getPriority(notification.severity),
+            contentType: "text/plain",
         };
+    }
+
+    private getPriority(severity: string): number {
+        switch (severity) {
+            case "notify":
+                return 1;
+            case "info":
+                return 4;
+            case "alert":
+                return 10;
+            default:
+                return 4;
+        }
     }
 
     private sendMessage(message: GotifyMessage): void {

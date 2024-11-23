@@ -71,6 +71,7 @@ class Gotify extends utils.Adapter {
     try {
       callback();
     } catch (e) {
+      this.log.error("Error during unload: " + JSON.stringify(e));
       callback();
     }
   }
@@ -80,7 +81,50 @@ class Gotify extends utils.Adapter {
         this.sendMessage(obj.message);
         if (obj.callback)
           this.sendTo(obj.from, obj.command, "Message received", obj.callback);
+      } else if (obj.command === "sendNotification") {
+        this.processNotification(obj);
       }
+    }
+  }
+  processNotification(obj) {
+    const notificationMessage = this.formatNotification(obj.message);
+    try {
+      this.sendMessage(notificationMessage);
+      if (obj.callback) {
+        this.sendTo(obj.from, "sendNotification", { sent: true }, obj.callback);
+      }
+    } catch {
+      if (obj.callback) {
+        this.sendTo(obj.from, "sendNotification", { sent: false }, obj.callback);
+      }
+    }
+  }
+  formatNotification(notification) {
+    const instances = notification.category.instances;
+    const readableInstances = Object.entries(instances).map(
+      ([instance, entry]) => `${instance.substring("system.adapter.".length)}: ${this.getLatestMessage(entry.messages)}`
+    );
+    const text = `${notification.category.description}
+        ${notification.host}:
+        ${readableInstances.join("\n")}
+            `;
+    return {
+      message: text,
+      title: notification.category.name,
+      priority: this.getPriority(notification.severity),
+      contentType: "text/plain"
+    };
+  }
+  getPriority(severity) {
+    switch (severity) {
+      case "notify":
+        return 1;
+      case "info":
+        return 4;
+      case "alert":
+        return 10;
+      default:
+        return 4;
     }
   }
   sendMessage(message) {
@@ -103,6 +147,10 @@ class Gotify extends utils.Adapter {
     } else {
       this.log.error("Cannot send notification while not configured:" + JSON.stringify(message));
     }
+  }
+  getLatestMessage(messages) {
+    const latestMessage = messages.sort((a, b) => a.ts < b.ts ? 1 : -1)[0];
+    return `${new Date(latestMessage.ts).toLocaleString()} ${latestMessage.message}`;
   }
 }
 if (require.main !== module) {
