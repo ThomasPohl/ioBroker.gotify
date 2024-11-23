@@ -9,6 +9,7 @@ Blockly.Words["gotify_prio_min"] = { en: "minimum", de: "Minimale Priorität" };
 Blockly.Words["gotify_prio_low"] = { en: "low", de: "Niedrige Priorität" };
 Blockly.Words["gotify_prio_default"] = { en: "default", de: "Normal" };
 Blockly.Words["gotify_prio_high"] = { en: "high priority", de: "Hohe Priorität" };
+Blockly.Words["gotify_prio_critical"] = { en: "critical", de: "Kritisch" };
 Blockly.Words["gotify_format"] = { en: "format", de: "Format" };
 Blockly.Words["gotify_format_text"] = { en: "text", de: "Text" };
 Blockly.Words["gotify_format_markdown"] = { en: "markdown", de: "Markdown" };
@@ -83,6 +84,7 @@ Blockly.Blocks["gotify"] = {
                     [Blockly.Translate("gotify_prio_low"), "1"],
                     [Blockly.Translate("gotify_prio_default"), "4"],
                     [Blockly.Translate("gotify_prio_high"), "8"],
+                    [Blockly.Translate("gotify_prio_critical"), "10"],
                 ]),
                 "PRIORITY",
             );
