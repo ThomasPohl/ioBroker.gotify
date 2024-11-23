@@ -3,6 +3,19 @@
         "name": "gotify",
         "version": "0.4.0",
         "news": {
+            "0.4.0": {
+                "en": "Support for notification-manager was added. Blockly can  now send notifications with priority 10.",
+                "de": "Unterstützung für Notification-Manager wurde hinzugefügt. Blockly kann jetzt Benachrichtigungen mit der Priorität 10 versenden.",
+                "ru": "Добавлена ​​поддержка менеджера уведомлений. Blockly теперь может отправлять уведомления с приоритетом 10.",
+                "pt": "Suporte para gerenciador de notificação foi adicionado. Blockly agora pode enviar notificações com prioridade 10.",
+                "nl": "Ondersteuning voor notificatiemanager is toegevoegd. Blockly kan nu notificaties versturen met prioriteit 10.",
+                "fr": "La prise en charge du gestionnaire de notifications a été ajoutée. Blockly peut désormais envoyer des notifications avec la priorité 10.",
+                "it": "È stato aggiunto il supporto per il gestore delle notifiche. Blockly ora può inviare notifiche con priorità 10.",
+                "es": "Se agregó soporte para el administrador de notificaciones. Blockly ahora puede enviar notificaciones con prioridad 10.",
+                "pl": "Dodano obsługę menedżera powiadomień. Blockly może teraz wysyłać powiadomienia z priorytetem 10.",
+                "uk": "Додано підтримку диспетчера сповіщень. Blockly тепер може надсилати сповіщення з пріоритетом 10.",
+                "zh-cn": "添加了对通知管理器的支持。 Blockly 现在可以发送优先级为 10 的通知。"
+            },
             "0.3.0": {
                 "en": "The token is now stored encrypted",
                 "de": "Der Token wird nun verschlüsselt gespeichert",
@@ -82,8 +95,14 @@
             "uk": "Цей адаптер дозволяє надсилати повідомлення на поштовх, використовуючи",
             "zh-cn": "这种适应者使你能够向你发出动议的通知,以便你能够通过批准。"
         },
-        "authors": ["Thomas Pohl <post@thomaspohl.net>"],
-        "keywords": ["gotify", "notification", "communication"],
+        "authors": [
+            "Thomas Pohl <post@thomaspohl.net>"
+        ],
+        "keywords": [
+            "gotify",
+            "notification",
+            "communication"
+        ],
         "licenseInformation": {
             "license": "Apache-2.0",
             "type": "free"
@@ -125,8 +144,12 @@
         "url": "",
         "token": ""
     },
-    "protectedNative": ["token"],
-    "encryptedNative": ["token"],
+    "protectedNative": [
+        "token"
+    ],
+    "encryptedNative": [
+        "token"
+    ],
     "objects": [],
     "instanceObjects": [
         {
