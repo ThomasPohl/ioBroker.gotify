@@ -35,3 +35,7 @@ services:
 
 volumes:
     iobrokerdata-gotify:
+
+networks:
+    default:
+        driver: bridge
