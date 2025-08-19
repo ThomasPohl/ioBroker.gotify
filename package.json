@@ -27,7 +27,7 @@
         "url": "https://github.com/ThomasPohl/ioBroker.gotify"
     },
     "dependencies": {
-        "@iobroker/adapter-core": "^3.2.3",
+        "@iobroker/adapter-core": "^3.3.2",
         "axios": "^1.9.0"
     },
     "devDependencies": {
