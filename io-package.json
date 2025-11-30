@@ -95,14 +95,8 @@
             "uk": "Цей адаптер дозволяє надсилати повідомлення на поштовх, використовуючи",
             "zh-cn": "这种适应者使你能够向你发出动议的通知,以便你能够通过批准。"
         },
-        "authors": [
-            "Thomas Pohl <post@thomaspohl.net>"
-        ],
-        "keywords": [
-            "gotify",
-            "notification",
-            "communication"
-        ],
+        "authors": ["Thomas Pohl <post@thomaspohl.net>"],
+        "keywords": ["gotify", "notification", "communication"],
         "licenseInformation": {
             "license": "Apache-2.0",
             "type": "free"
@@ -116,7 +110,6 @@
         "type": "messaging",
         "compact": true,
         "connectionType": "cloud",
-        "role": "indicator.connected",
         "dataSource": "push",
         "blockly": true,
         "messagebox": true,
@@ -144,12 +137,8 @@
         "url": "",
         "token": ""
     },
-    "protectedNative": [
-        "token"
-    ],
-    "encryptedNative": [
-        "token"
-    ],
+    "protectedNative": ["token"],
+    "encryptedNative": ["token"],
     "objects": [],
     "instanceObjects": [
         {
