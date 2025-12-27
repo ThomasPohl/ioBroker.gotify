@@ -23,39 +23,212 @@ class Gotify extends utils.Adapter {
         this.on('unload', this.onUnload.bind(this));
     }
 
+    private async migrateConfigurationIfNeeded(): Promise<void> {
+        // Migration: If old format (token as string) still exists, migrate
+        // let migrated = false;
+        this.log.info(`Checking adapter configuration for migration needs...${JSON.stringify(this.config)}`);
+        if (this.config.token && this.config.tokens && this.config.tokens.length === 0) {
+            this.log.info('Old adapter configuration detected, performing migration...');
+            // Perform migration
+            const alias = 'default';
+            this.config.tokens = [{ alias, token: this.config.token }];
+            this.config.defaultTokenAlias = alias;
+            this.config.token = '';
+            // migrated = true;
+            this.log.info('Adapter configuration migrated to multi-token structure.');
+            // Optional: Save migration persistently
+            const obj = await this.getForeignObjectAsync(`system.adapter.${this.name}.${this.instance}`);
+            if (obj && obj.native) {
+                let changed = false;
+                if (
+                    !Array.isArray(obj.native.tokens) ||
+                    JSON.stringify(obj.native.tokens) !== JSON.stringify(this.config.tokens)
+                ) {
+                    obj.native.tokens = this.config.tokens;
+                    changed = true;
+                }
+                if (obj.native.defaultTokenAlias !== this.config.defaultTokenAlias) {
+                    obj.native.defaultTokenAlias = this.config.defaultTokenAlias;
+                    changed = true;
+                }
+                if ('token' in obj.native) {
+                    delete obj.native.token;
+                    changed = true;
+                }
+                if (changed) {
+                    this.extendForeignObject(`system.adapter.${this.name}.${this.instance}`, obj);
+                }
+            }
+        }
+
+        this.log.debug(`config url: ${this.config.url}`);
+        this.log.debug(`config tokens: ${JSON.stringify(this.config.tokens)}`);
+        this.log.debug(`config defaultTokenAlias: ${this.config.defaultTokenAlias}`);
+
+        // Decrypt tokens if needed (all tokens in the array)
+        let tokensDecrypted = false;
+        if (this.config.tokens && Array.isArray(this.config.tokens)) {
+            for (const t of this.config.tokens) {
+                if (!this.supportsFeature || !this.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
+                    if (t.token && t.token.startsWith('$/aes')) {
+                        t.token = this.decrypt(t.token);
+                        tokensDecrypted = true;
+                    }
+                }
+            }
+        }
+        // After decrypting: Perform default check and write decrypted tokens back
+        if (tokensDecrypted) {
+            // Default check (only one default, as above)
+            let foundDefault = false;
+            let defaultAlias = '';
+            const defaultIndices = this.config.tokens.map((t, i) => (t.isDefault ? i : -1)).filter(i => i !== -1);
+            if (defaultIndices.length === 1) {
+                foundDefault = true;
+                defaultAlias = this.config.tokens[defaultIndices[0]].alias || '';
+            } else if (defaultIndices.length > 1) {
+                for (let i = 0; i < this.config.tokens.length; i++) {
+                    this.config.tokens[i].isDefault = i === defaultIndices[0];
+                }
+                foundDefault = true;
+                defaultAlias = this.config.tokens[defaultIndices[0]].alias || '';
+            }
+            if (!foundDefault || !defaultAlias) {
+                this.config.tokens.forEach((t, i) => (t.isDefault = i === 0));
+                defaultAlias = this.config.tokens[0].alias || '';
+            }
+            this.config.defaultTokenAlias = defaultAlias;
+            // Save back to object (decrypted)
+            const obj = await this.getForeignObjectAsync(`system.adapter.${this.name}.${this.instance}`);
+            if (obj && obj.native) {
+                let changed = false;
+                if (
+                    !Array.isArray(obj.native.tokens) ||
+                    JSON.stringify(obj.native.tokens) !== JSON.stringify(this.config.tokens)
+                ) {
+                    obj.native.tokens = this.config.tokens;
+                    changed = true;
+                    this.log.info('Tokens changed during decryption migration.');
+                }
+                if (obj.native.defaultTokenAlias !== defaultAlias) {
+                    obj.native.defaultTokenAlias = defaultAlias;
+                    changed = true;
+                    this.log.info('defaultTokenAlias changed during decryption migration.');
+                }
+                if (changed) {
+                    this.log.info('Saving decrypted tokens back to adapter configuration.');
+                    this.extendForeignObject(`system.adapter.${this.name}.${this.instance}`, obj);
+                }
+            }
+        }
+        // Encrypt tokens if they are still stored unencrypted
+        await this.encryptTokensIfNeeded();
+
+        if (this.config.url && this.config.tokens && this.config.tokens.length > 0) {
+            await this.setState('info.connection', true, true);
+            this.log.info('Gotify adapter konfiguriert');
+        } else {
+            await this.setState('info.connection', false, true);
+            this.log.warn('Gotify adapter nicht konfiguriert');
+        }
+        // Migration for privateKey if needed
+        await this.encryptPrivateKeyIfNeeded();
+        this.log.info('Migration check completed.');
+    }
+
     /**
      * Is called when databases are connected and adapter received configuration.
      */
     private async onReady(): Promise<void> {
-        // Initialize your adapter here
-
-        // The adapters config (in the instance object everything under the attribute "native") is accessible via
-        // this.config:
-        this.log.debug(`config url: ${this.config.url}`);
-        this.log.debug(`config token: ${this.config.token}`);
-        if (!this.supportsFeature || !this.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
-            this.config.token = this.decrypt(this.config.token);
+        this.log.info('Gotify adapter starting');
+        await this.migrateConfigurationIfNeeded();
+        // Logic : Only one token may have isDefault=true, set defaultTokenAlias accordingly
+        if (this.config.tokens && Array.isArray(this.config.tokens) && this.config.tokens.length > 0) {
+            let foundDefault = false;
+            let defaultAlias = '';
+            // Find all indices with isDefault=true
+            const defaultIndices = this.config.tokens.map((t, i) => (t.isDefault ? i : -1)).filter(i => i !== -1);
+            if (defaultIndices.length === 1) {
+                foundDefault = true;
+                defaultAlias = this.config.tokens[defaultIndices[0]].alias || '';
+            } else if (defaultIndices.length > 1) {
+                // Multiple found, only first remains
+                for (let i = 0; i < this.config.tokens.length; i++) {
+                    this.config.tokens[i].isDefault = i === defaultIndices[0];
+                }
+                foundDefault = true;
+                defaultAlias = this.config.tokens[defaultIndices[0]].alias || '';
+            }
+            // If none set or alias empty: first as default
+            if (!foundDefault || !defaultAlias) {
+                this.config.tokens.forEach((t, i) => (t.isDefault = i === 0));
+                defaultAlias = this.config.tokens[0].alias || '';
+            }
+            this.config.defaultTokenAlias = defaultAlias;
+            // Save back to object
+            const obj = await this.getForeignObjectAsync(`system.adapter.${this.name}.${this.instance}`);
+            if (obj && obj.native) {
+                let changed = false;
+                if (obj.native.defaultTokenAlias !== defaultAlias) {
+                    obj.native.defaultTokenAlias = defaultAlias;
+                    changed = true;
+                }
+                if (
+                    !Array.isArray(obj.native.tokens) ||
+                    JSON.stringify(obj.native.tokens) !== JSON.stringify(this.config.tokens)
+                ) {
+                    obj.native.tokens = this.config.tokens;
+                    changed = true;
+                }
+                if (changed) {
+                    this.extendForeignObject(`system.adapter.${this.name}.${this.instance}`, obj);
+                }
+            }
         }
-        if (this.config.url && this.config.token) {
-            await this.setState('info.connection', true, true);
-            this.log.info('Gotify adapter configured');
-        } else {
-            await this.setState('info.connection', false, true);
-            this.log.warn('Gotify adapter not configured');
+        // Ensure tokens array is always saved in the object (so Admin UI sees it)
+        if (this.config.tokens && Array.isArray(this.config.tokens)) {
+            const obj = await this.getForeignObjectAsync(`system.adapter.${this.name}.${this.instance}`);
+            if (
+                obj &&
+                obj.native &&
+                (!Array.isArray(obj.native.tokens) ||
+                    JSON.stringify(obj.native.tokens) !== JSON.stringify(this.config.tokens))
+            ) {
+                obj.native.tokens = this.config.tokens;
+                this.extendForeignObject(`system.adapter.${this.name}.${this.instance}`, obj);
+            }
         }
-        await this.encryptPrivateKeyIfNeeded();
+        this.log.info('Gotify adapter started');
     }
 
+    // Legacy: For migration of old instances, can be removed later
     private async encryptPrivateKeyIfNeeded(): Promise<void> {
-        if (this.config.token && this.config.token.length > 0) {
-            await this.getForeignObjectAsync(`system.adapter.${this.name}.${this.instance}`).then(data => {
-                if (data && data.native && data.native.token && !data.native.token.startsWith('$/aes')) {
-                    this.config.token = data.native.privateKey;
-                    data.native.token = this.encrypt(data.native.token);
-                    this.extendForeignObject(`system.adapter.${this.name}.${this.instance}`, data);
-                    this.log.info('privateKey is stored now encrypted');
+        // Check if old token field still exists (Legacy)
+        const obj = await this.getForeignObjectAsync(`system.adapter.${this.name}.${this.instance}`);
+        if (obj && obj.native && obj.native.token && !obj.native.token.startsWith('$/aes')) {
+            obj.native.token = this.encrypt(obj.native.token);
+            this.extendForeignObject(`system.adapter.${this.name}.${this.instance}`, obj);
+            this.log.info('token is now stored encrypted');
+        }
+    }
+
+    /**
+     * Encrypts all tokens in the array if they are still unencrypted and saves them persistently.
+     */
+    private async encryptTokensIfNeeded(): Promise<void> {
+        const obj = await this.getForeignObjectAsync(`system.adapter.${this.name}.${this.instance}`);
+        let changed = false;
+        if (obj && obj.native && Array.isArray(obj.native.tokens)) {
+            for (const t of obj.native.tokens) {
+                if (t.token && !t.token.startsWith('$/aes')) {
+                    t.token = this.encrypt(t.token);
+                    changed = true;
                 }
-            });
+            }
+            if (changed) {
+                this.extendForeignObject(`system.adapter.${this.name}.${this.instance}`, obj);
+                this.log.info('All tokens are now stored encrypted');
+            }
         }
     }
 
@@ -65,6 +238,7 @@ class Gotify extends utils.Adapter {
      * @param callback Callback to be called after shutdown
      */
     private onUnload(callback: () => void): void {
+        this.log.info('Gotify adapter shutting down...');
         try {
             callback();
         } catch (e) {
@@ -74,6 +248,7 @@ class Gotify extends utils.Adapter {
     }
 
     private onMessage(obj: ioBroker.Message): void {
+        this.log.info(`Received message: ${JSON.stringify(obj)}`);
         if (typeof obj === 'object' && obj.message) {
             if (obj.command === 'send') {
                 this.sendMessage(obj.message as GotifyMessage);
@@ -134,10 +309,18 @@ class Gotify extends utils.Adapter {
         }
     }
 
-    private sendMessage(message: GotifyMessage): void {
-        if (this.config.url && this.config.token) {
+    private sendMessage(message: GotifyMessage, tokenAlias?: string): void {
+        if (this.config.url && this.config.tokens && this.config.tokens.length > 0) {
+            // Token auswählen
+            let tokenObj = this.config.tokens.find(
+                (t: any) => t.alias === (tokenAlias || this.config.defaultTokenAlias),
+            );
+            if (!tokenObj) {
+                tokenObj = this.config.tokens[0];
+            }
+            const token = tokenObj.token;
             axios
-                .post(`${this.config.url}/message?token=${this.config.token}`, {
+                .post(`${this.config.url}/message?token=${token}`, {
                     title: message.title,
                     message: message.message,
                     priority: message.priority,
