@@ -10,6 +10,7 @@ interface GotifyMessage {
     title?: string;
     priority?: number;
     contentType?: string;
+    token?: string;
 }
 
 class Gotify extends utils.Adapter {
@@ -136,8 +137,12 @@ class Gotify extends utils.Adapter {
 
     private sendMessage(message: GotifyMessage): void {
         if (this.config.url && this.config.token) {
+            let token = this.config.token;
+            if (message.token) {
+                token = message.token;
+            }
             axios
-                .post(`${this.config.url}/message?token=${this.config.token}`, {
+                .post(`${this.config.url}/message?token=${token}`, {
                     title: message.title,
                     message: message.message,
                     priority: message.priority,

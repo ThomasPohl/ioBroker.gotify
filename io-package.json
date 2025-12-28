@@ -146,7 +146,7 @@
             "type": "state",
             "common": {
                 "name": {
-                    "en": "Connected to Gotify server",
+                    "en": "Connection to Gotify server",
                     "de": "Verbindung mit Gotify Server",
                     "ru": "Подключен к серверу Gotify",
                     "pt": "Conectado ao servidor Gotify",
