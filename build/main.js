@@ -189,17 +189,17 @@ class Gotify extends utils.Adapter {
         return 4;
     }
   }
-  sendMessage(message, tokenAlias) {
-    if (tokenAlias === void 0) {
-      const defaultToken = this.config.tokens.find((t) => t.isDefault);
-      tokenAlias = defaultToken ? defaultToken.alias : this.config.tokens[0].alias;
+  sendMessage(message) {
+    let token = void 0;
+    if (message.token) {
+      token = message.token;
+    } else if (this.config.tokens && Array.isArray(this.config.tokens) && this.config.tokens.length > 0) {
+      const defaultToken = this.config.tokens.find((t) => t.isDefault) || this.config.tokens[0];
+      token = defaultToken.token;
+    } else if (this.config.token) {
+      token = this.config.token;
     }
-    if (this.config.url && this.config.tokens && this.config.tokens.length > 0) {
-      let tokenObj = this.config.tokens.find((t) => t.alias === tokenAlias);
-      if (!tokenObj) {
-        tokenObj = this.config.tokens[0];
-      }
-      const token = tokenObj.token;
+    if (this.config.url && token) {
       import_axios.default.post(`${this.config.url}/message?token=${token}`, {
         title: message.title,
         message: message.message,

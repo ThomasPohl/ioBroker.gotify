@@ -10,6 +10,7 @@ interface GotifyMessage {
     title?: string;
     priority?: number;
     contentType?: string;
+    token?: string;
 }
 
 class Gotify extends utils.Adapter {
@@ -203,19 +204,18 @@ class Gotify extends utils.Adapter {
         }
     }
 
-    private sendMessage(message: GotifyMessage, tokenAlias?: string): void {
-        if (tokenAlias === undefined) {
-            const defaultToken = this.config.tokens.find((t: any) => t.isDefault);
-            tokenAlias = defaultToken ? defaultToken.alias : this.config.tokens[0].alias;
+    private sendMessage(message: GotifyMessage): void {
+        // Prefer message.token if set, otherwise use default token from config.tokens or config.token
+        let token: string | undefined = undefined;
+        if (message.token) {
+            token = message.token;
+        } else if (this.config.tokens && Array.isArray(this.config.tokens) && this.config.tokens.length > 0) {
+            const defaultToken = this.config.tokens.find((t: any) => t.isDefault) || this.config.tokens[0];
+            token = defaultToken.token;
+        } else if (this.config.token) {
+            token = this.config.token;
         }
-
-        if (this.config.url && this.config.tokens && this.config.tokens.length > 0) {
-            // Token auswählen
-            let tokenObj = this.config.tokens.find((t: any) => t.alias === tokenAlias);
-            if (!tokenObj) {
-                tokenObj = this.config.tokens[0];
-            }
-            const token = tokenObj.token;
+        if (this.config.url && token) {
             axios
                 .post(`${this.config.url}/message?token=${token}`, {
                     title: message.title,

@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "gotify",
-        "version": "0.4.0",
+        "version": "0.5.0",
         "news": {
+            "0.5.0": {
+                "en": "Allow to overwrite token when sending messages (javascript only not for blockly)\nUpdate dependencies",
+                "de": "Lassen Sie Token beim Senden von Nachrichten überschreiben (javascript nur nicht für blockweise)\nAbhängigkeiten aktualisieren",
+                "ru": "Разрешить перезаписывать токен при отправке сообщений (javascript только не для блокировки)\nОбновление зависимостей",
+                "pt": "Permitir sobrescrever o token ao enviar mensagens (javascript apenas não para blockly)\nAtualizar dependências",
+                "nl": "Token overschrijven bij het versturen van berichten (javascript alleen niet voor blokjes)\nAfhankelijkheden bijwerken",
+                "fr": "Permettre d'écraser le jeton lors de l'envoi de messages (javascript seulement pas pour bloquer)\nMise à jour des dépendances",
+                "it": "Consentire di sovrascrivere token quando si inviano messaggi (javascript solo non per blocco)\nDipendenze di aggiornamento",
+                "es": "Permitir overwrite token al enviar mensajes (javascript solamente no por bloqueo)\nActualizar las dependencias",
+                "pl": "Pozwól nadpisać token podczas wysyłania wiadomości (javascript tylko nie dla blockly)\nAktualizuj zależności",
+                "uk": "Дозволяє перезаписувати токени при надсиланні повідомлень (javascript only not for blockly)\nОновлення залежності",
+                "zh-cn": "允许在发送信件时覆盖符号( javascript 仅用于块状)\n更新依赖关系"
+            },
             "0.4.0": {
                 "en": "Support for notification-manager was added. Blockly can  now send notifications with priority 10.",
                 "de": "Unterstützung für Notification-Manager wurde hinzugefügt. Blockly kann jetzt Benachrichtigungen mit der Priorität 10 versenden.",
@@ -140,13 +153,14 @@
     },
     "protectedNative": ["token", "tokens.token"],
     "encryptedNative": ["token", "tokens.token"],
+    "objects": [],
     "instanceObjects": [
         {
             "_id": "info.connection",
             "type": "state",
             "common": {
                 "name": {
-                    "en": "Connected to Gotify server",
+                    "en": "Connection to Gotify server",
                     "de": "Verbindung mit Gotify Server",
                     "ru": "Подключен к серверу Gotify",
                     "pt": "Conectado ao servidor Gotify",
