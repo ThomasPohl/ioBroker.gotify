@@ -135,11 +135,11 @@
     },
     "native": {
         "url": "",
-        "token": ""
+        "token": "",
+        "tokens": []
     },
-    "protectedNative": ["token"],
-    "encryptedNative": ["token"],
-    "objects": [],
+    "protectedNative": ["token", "tokens.token"],
+    "encryptedNative": ["token", "tokens.token"],
     "instanceObjects": [
         {
             "_id": "info.connection",
