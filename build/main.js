@@ -37,41 +37,42 @@ class Gotify extends utils.Adapter {
    * Is called when databases are connected and adapter received configuration.
    */
   async onReady() {
-    this.log.debug("config url: " + this.config.url);
-    this.log.debug("config token: " + this.config.token);
+    this.log.debug(`config url: ${this.config.url}`);
+    this.log.debug(`config token: ${this.config.token}`);
     if (!this.supportsFeature || !this.supportsFeature("ADAPTER_AUTO_DECRYPT_NATIVE")) {
       this.config.token = this.decrypt(this.config.token);
     }
     if (this.config.url && this.config.token) {
-      this.setState("info.connection", true, true);
+      await this.setState("info.connection", true, true);
       this.log.info("Gotify adapter configured");
     } else {
-      this.setState("info.connection", false, true);
+      await this.setState("info.connection", false, true);
       this.log.warn("Gotify adapter not configured");
     }
-    this.encryptPrivateKeyIfNeeded();
+    await this.encryptPrivateKeyIfNeeded();
   }
-  encryptPrivateKeyIfNeeded() {
+  async encryptPrivateKeyIfNeeded() {
     if (this.config.token && this.config.token.length > 0) {
-      this.getForeignObjectAsync(`system.adapter.${this.name}.${this.instance}`).then((data) => {
+      await this.getForeignObjectAsync(`system.adapter.${this.name}.${this.instance}`).then((data) => {
         if (data && data.native && data.native.token && !data.native.token.startsWith("$/aes")) {
           this.config.token = data.native.privateKey;
           data.native.token = this.encrypt(data.native.token);
-          this.extendForeignObjectAsync(`system.adapter.${this.name}.${this.instance}`, data).then(
-            () => this.log.info("privateKey is stored now encrypted")
-          );
+          this.extendForeignObject(`system.adapter.${this.name}.${this.instance}`, data);
+          this.log.info("privateKey is stored now encrypted");
         }
       });
     }
   }
   /**
    * Is called when adapter shuts down - callback has to be called under any circumstances!
+   *
+   * @param callback Callback to be called after shutdown
    */
   onUnload(callback) {
     try {
       callback();
     } catch (e) {
-      this.log.error("Error during unload: " + JSON.stringify(e));
+      this.log.error(`Error during unload: ${JSON.stringify(e)}`);
       callback();
     }
   }
@@ -79,8 +80,9 @@ class Gotify extends utils.Adapter {
     if (typeof obj === "object" && obj.message) {
       if (obj.command === "send") {
         this.sendMessage(obj.message);
-        if (obj.callback)
+        if (obj.callback) {
           this.sendTo(obj.from, obj.command, "Message received", obj.callback);
+        }
       } else if (obj.command === "sendNotification") {
         this.processNotification(obj);
       }
@@ -129,7 +131,11 @@ class Gotify extends utils.Adapter {
   }
   sendMessage(message) {
     if (this.config.url && this.config.token) {
-      import_axios.default.post(this.config.url + "/message?token=" + this.config.token, {
+      let token = this.config.token;
+      if (message.token) {
+        token = message.token;
+      }
+      import_axios.default.post(`${this.config.url}/message?token=${token}`, {
         title: message.title,
         message: message.message,
         priority: message.priority,
@@ -142,10 +148,10 @@ class Gotify extends utils.Adapter {
       }).then(() => {
         this.log.debug("Successfully sent message to gotify");
       }).catch((error) => {
-        this.log.error("Error while sending message to gotify:" + JSON.stringify(error));
+        this.log.error(`Error while sending message to gotify:${JSON.stringify(error)}`);
       });
     } else {
-      this.log.error("Cannot send notification while not configured:" + JSON.stringify(message));
+      this.log.error(`Cannot send notification while not configured:${JSON.stringify(message)}`);
     }
   }
   getLatestMessage(messages) {

@@ -19,10 +19,10 @@ Send push notifications from [ioBroker](https://iobroker.net/) to [Gotify](https
 
 <!--
     Placeholder for the next version (at the beginning of the line):
-    ## **WORK IN PROGRESS**
+    ### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+### 0.5.0 (2025-12-28)
 
 - (Thomas Pohl) Allow to overwrite token when sending messages (javascript only not for blockly)
 - (Thomas Pohl) Update dependencies
@@ -45,18 +45,6 @@ Send push notifications from [ioBroker](https://iobroker.net/) to [Gotify](https
 
 - (Thomas Pohl) Add timeout for http calls
 - (Thomas Pohl) Update dependency versions
-
-### 0.1.0
-
-- (Thomas Pohl) Update to adapter-core 2.5.1
-
-### 0.0.2-RC1.0 (2022-02-09)
-
-- (Thomas Pohl) Update dependencies
-
-### 0.0.1
-
-- (Thomas Pohl) initial release
 
 ## Installation
 

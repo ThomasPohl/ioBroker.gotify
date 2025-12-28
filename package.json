@@ -1,81 +1,81 @@
 {
-    "name": "iobroker.gotify",
-    "version": "0.4.0",
-    "description": "Send push notifications to gotify",
-    "author": {
-        "name": "Thomas Pohl",
-        "email": "post@thomaspohl.net"
-    },
-    "contributors": [
-        {
-            "name": "Thomas Pohl"
-        }
-    ],
-    "homepage": "https://github.com/ThomasPohl/ioBroker.gotify",
-    "license": "Apache-2.0",
-    "keywords": [
-        "gotify",
-        "notification",
-        "communication",
-        "ioBroker"
-    ],
-    "engines": {
-        "node": ">= 20"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ThomasPohl/ioBroker.gotify"
-    },
-    "dependencies": {
-        "@iobroker/adapter-core": "^3.3.2",
-        "axios": "^1.13.2"
-    },
-    "devDependencies": {
-        "@alcalzone/release-script": "~5.0.0",
-        "@alcalzone/release-script-plugin-iobroker": "^4.0.0",
-        "@alcalzone/release-script-plugin-license": "^4.0.0",
-        "@alcalzone/release-script-plugin-manual-review": "^4.0.0",
-        "@iobroker/adapter-dev": "^1.5.0",
-        "@iobroker/eslint-config": "^2.2.0",
-        "@iobroker/testing": "^5.2.2",
-        "@types/gulp": "^4.0.18",
-        "@types/node": "^25.0.3",
-        "@types/proxyquire": "^1.3.31",
-        "@typescript-eslint/eslint-plugin": "^8.50.1",
-        "@typescript-eslint/parser": "^8.50.0",
-        "proxyquire": "^2.1.3",
-        "rimraf": "^6.1.2",
-        "source-map-support": "^0.5.19",
-        "ts-node": "^10.9.2",
-        "typescript": "^5.9.3"
-    },
-    "main": "build/main.js",
-    "files": [
-        "admin{,/!(src)/**}/!(tsconfig|tsconfig.*|.eslintrc).{json,json5}",
-        "admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
-        "build/",
-        "www/",
-        "io-package.json",
-        "LICENSE"
-    ],
-    "scripts": {
-        "prebuild": "rimraf ./build",
-        "build:ts": "tsc -p tsconfig.build.json",
-        "translate": "translate-adapter",
-        "build": "build-adapter typescript",
-        "watch:ts": "tsc -p tsconfig.build.json --watch",
-        "watch": "npm run watch:ts",
-        "test:ts": "mocha --config test/mocharc.custom.json src/**/*.test.ts --exit",
-        "test:package": "mocha test/package --exit",
-        "test:unit": "mocha test/unit --exit",
-        "test:integration": "mocha test/integration --exit",
-        "test": "npm run test:ts && npm run test:package",
-        "check": "tsc --noEmit",
-        "lint": "eslint -c eslint.config.mjs .",
-        "release": "release-script"
-    },
-    "bugs": {
-        "url": "https://github.com/ThomasPohl/ioBroker.gotify/issues"
-    },
-    "readmeFilename": "README.md"
+  "name": "iobroker.gotify",
+  "version": "0.5.0",
+  "description": "Send push notifications to gotify",
+  "author": {
+    "name": "Thomas Pohl",
+    "email": "post@thomaspohl.net"
+  },
+  "contributors": [
+    {
+      "name": "Thomas Pohl"
+    }
+  ],
+  "homepage": "https://github.com/ThomasPohl/ioBroker.gotify",
+  "license": "Apache-2.0",
+  "keywords": [
+    "gotify",
+    "notification",
+    "communication",
+    "ioBroker"
+  ],
+  "engines": {
+    "node": ">= 20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ThomasPohl/ioBroker.gotify"
+  },
+  "dependencies": {
+    "@iobroker/adapter-core": "^3.3.2",
+    "axios": "^1.13.2"
+  },
+  "devDependencies": {
+    "@alcalzone/release-script": "~5.0.0",
+    "@alcalzone/release-script-plugin-iobroker": "^4.0.0",
+    "@alcalzone/release-script-plugin-license": "^4.0.0",
+    "@alcalzone/release-script-plugin-manual-review": "^4.0.0",
+    "@iobroker/adapter-dev": "^1.5.0",
+    "@iobroker/eslint-config": "^2.2.0",
+    "@iobroker/testing": "^5.2.2",
+    "@types/gulp": "^4.0.18",
+    "@types/node": "^25.0.3",
+    "@types/proxyquire": "^1.3.31",
+    "@typescript-eslint/eslint-plugin": "^8.50.1",
+    "@typescript-eslint/parser": "^8.50.0",
+    "proxyquire": "^2.1.3",
+    "rimraf": "^6.1.2",
+    "source-map-support": "^0.5.19",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "main": "build/main.js",
+  "files": [
+    "admin{,/!(src)/**}/!(tsconfig|tsconfig.*|.eslintrc).{json,json5}",
+    "admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
+    "build/",
+    "www/",
+    "io-package.json",
+    "LICENSE"
+  ],
+  "scripts": {
+    "prebuild": "rimraf ./build",
+    "build:ts": "tsc -p tsconfig.build.json",
+    "translate": "translate-adapter",
+    "build": "build-adapter typescript",
+    "watch:ts": "tsc -p tsconfig.build.json --watch",
+    "watch": "npm run watch:ts",
+    "test:ts": "mocha --config test/mocharc.custom.json src/**/*.test.ts --exit",
+    "test:package": "mocha test/package --exit",
+    "test:unit": "mocha test/unit --exit",
+    "test:integration": "mocha test/integration --exit",
+    "test": "npm run test:ts && npm run test:package",
+    "check": "tsc --noEmit",
+    "lint": "eslint -c eslint.config.mjs .",
+    "release": "release-script"
+  },
+  "bugs": {
+    "url": "https://github.com/ThomasPohl/ioBroker.gotify/issues"
+  },
+  "readmeFilename": "README.md"
 }
