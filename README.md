@@ -22,7 +22,7 @@ Send push notifications from [ioBroker](https://iobroker.net/) to [Gotify](https
     ## **WORK IN PROGRESS**
 -->
 
-## **WORK IN PROGRESS**
+### **WORK IN PROGRESS**
 
 - (Thomas Pohl) Allow to overwrite token when sending messages (javascript only not for blockly)
 - (Thomas Pohl) Update dependencies
