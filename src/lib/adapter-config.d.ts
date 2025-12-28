@@ -11,7 +11,6 @@ declare global {
             // deprecated - for migration support
             token: string;
             tokens: GotifyToken[];
-            defaultTokenAlias: string;
         }
     }
 }
