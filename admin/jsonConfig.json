@@ -71,11 +71,6 @@
                             "default": ""
                         }
                     ]
-                },
-                "defaultTokenAlias": {
-                    "type": "staticText",
-                    "hidden": "true",
-                    "text": ""
                 }
             }
         }

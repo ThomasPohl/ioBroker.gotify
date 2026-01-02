@@ -83,7 +83,9 @@ class Gotify extends utils.Adapter {
         }
 
         if (changed) {
-            this.extendForeignObject(`system.adapter.${this.name}.${this.instance}`, obj);
+            this.extendForeignObject(`system.adapter.${this.name}.${this.instance}`, obj).catch(err => {
+                this.log.error(`Error saving config changes: ${JSON.stringify(err)}`);
+            });
         }
     }
 
@@ -121,8 +123,13 @@ class Gotify extends utils.Adapter {
                 }
             }
             if (changed) {
-                this.extendForeignObject(`system.adapter.${this.name}.${this.instance}`, obj);
-                this.log.info('All tokens are now stored encrypted');
+                this.extendForeignObject(`system.adapter.${this.name}.${this.instance}`, obj)
+                    .then(() => {
+                        this.log.info('All tokens are now stored encrypted');
+                    })
+                    .catch(err => {
+                        this.log.error(`Error encrypting tokens: ${JSON.stringify(err)}`);
+                    });
             }
         }
     }

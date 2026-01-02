@@ -5,7 +5,7 @@ type GotifyToken = { alias: string; token: string };
 type AdapterConfig = { url: string; tokens: GotifyToken[]; defaultTokenAlias: string };
 
 describe('Konfigurations-Migration', () => {
-    it('migriert alte Konfiguration korrekt', async () => {
+    it('migriert alte Konfiguration korrekt', () => {
         // Simuliere alte Konfiguration
         const oldConfig: any = {
             url: 'https://gotify.example',
