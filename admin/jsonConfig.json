@@ -20,16 +20,57 @@
                     "label": "url",
                     "help": "urlHelp"
                 },
-                "token": {
+                "table1Err1": {
+                    "type": "staticText",
+                    "text": "ERROR: Exactly one default token allowed!",
                     "newLine": true,
-                    "type": "text",
+                    "hidden": "let b=null; for(let ii=0; data.tokens && ii<data.tokens.length; ii++){ if (data.tokens[ii].isDefault) { if (b===null){ b=true; } else if (b===true){ return false; } else { b=false; }}}; if (b===false || b===null) return false; return true;",
+                    "style": {
+                        "color": "red"
+                    },
                     "xs": 12,
                     "sm": 12,
-                    "md": 8,
-                    "lg": 8,
-                    "xl": 8,
-                    "label": "token",
-                    "help": "tokenHelp"
+                    "md": 12,
+                    "lg": 6,
+                    "xl": 6
+                },
+                "tokens": {
+                    "type": "table",
+                    "newLine": true,
+                    "label": "tokens",
+                    "help": "tokensHelp",
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12,
+                    "xl": 12,
+                    "items": [
+                        {
+                            "type": "checkbox",
+                            "attr": "isDefault",
+                            "width": "10%",
+                            "title": "defaultTokenAlias",
+                            "tooltip": "defaultTokenAliasHelp",
+                            "default": false,
+                            "validator": "let b=null; for(let ii=0; globalData.tokens && ii<globalData.tokens.length; ii++){ if (globalData.tokens[ii].isDefault) { if (b===null){ b=true; } else if (b===true){ return false; } else { b=false; }}}; if (b===false || b===null) return false;  return true;",
+                            "validatorNoSaveOnError": true
+                        },
+                        {
+                            "type": "text",
+                            "attr": "alias",
+                            "width": "40%",
+                            "title": "tokenAlias",
+                            "tooltip": "tokenAliasHelp",
+                            "default": ""
+                        },
+                        {
+                            "type": "text",
+                            "attr": "token",
+                            "width": "50%",
+                            "title": "Token",
+                            "tooltip": "tokenHelp",
+                            "default": ""
+                        }
+                    ]
                 }
             }
         }
