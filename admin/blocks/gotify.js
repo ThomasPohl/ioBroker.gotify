@@ -107,7 +107,7 @@ Blockly.Blocks['gotify'] = {
     },
 };
 
-Blockly.JavaScript['gotify'] = function (block) {
+Blockly.JavaScript.forBlock['gotify'] = function (block) {
     var dropdown_instance = block.getFieldValue('INSTANCE');
     var message = Blockly.JavaScript.valueToCode(block, 'MESSAGE', Blockly.JavaScript.ORDER_ATOMIC);
     var text = '{\n';

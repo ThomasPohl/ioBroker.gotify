@@ -1,191 +1,182 @@
 {
-  "common": {
-    "name": "gotify",
-    "version": "0.5.0",
-    "news": {
-      "0.5.0": {
-        "en": "Allow to overwrite token when sending messages (javascript only not for blockly)\nUpdate dependencies",
-        "de": "Lassen Sie Token beim Senden von Nachrichten überschreiben (javascript nur nicht für blockweise)\nAbhängigkeiten aktualisieren",
-        "ru": "Разрешить перезаписывать токен при отправке сообщений (javascript только не для блокировки)\nОбновление зависимостей",
-        "pt": "Permitir sobrescrever o token ao enviar mensagens (javascript apenas não para blockly)\nAtualizar dependências",
-        "nl": "Token overschrijven bij het versturen van berichten (javascript alleen niet voor blokjes)\nAfhankelijkheden bijwerken",
-        "fr": "Permettre d'écraser le jeton lors de l'envoi de messages (javascript seulement pas pour bloquer)\nMise à jour des dépendances",
-        "it": "Consentire di sovrascrivere token quando si inviano messaggi (javascript solo non per blocco)\nDipendenze di aggiornamento",
-        "es": "Permitir overwrite token al enviar mensajes (javascript solamente no por bloqueo)\nActualizar las dependencias",
-        "pl": "Pozwól nadpisać token podczas wysyłania wiadomości (javascript tylko nie dla blockly)\nAktualizuj zależności",
-        "uk": "Дозволяє перезаписувати токени при надсиланні повідомлень (javascript only not for blockly)\nОновлення залежності",
-        "zh-cn": "允许在发送信件时覆盖符号( javascript 仅用于块状)\n更新依赖关系"
-      },
-      "0.4.0": {
-        "en": "Support for notification-manager was added. Blockly can  now send notifications with priority 10.",
-        "de": "Unterstützung für Notification-Manager wurde hinzugefügt. Blockly kann jetzt Benachrichtigungen mit der Priorität 10 versenden.",
-        "ru": "Добавлена ​​поддержка менеджера уведомлений. Blockly теперь может отправлять уведомления с приоритетом 10.",
-        "pt": "Suporte para gerenciador de notificação foi adicionado. Blockly agora pode enviar notificações com prioridade 10.",
-        "nl": "Ondersteuning voor notificatiemanager is toegevoegd. Blockly kan nu notificaties versturen met prioriteit 10.",
-        "fr": "La prise en charge du gestionnaire de notifications a été ajoutée. Blockly peut désormais envoyer des notifications avec la priorité 10.",
-        "it": "È stato aggiunto il supporto per il gestore delle notifiche. Blockly ora può inviare notifiche con priorità 10.",
-        "es": "Se agregó soporte para el administrador de notificaciones. Blockly ahora puede enviar notificaciones con prioridad 10.",
-        "pl": "Dodano obsługę menedżera powiadomień. Blockly może teraz wysyłać powiadomienia z priorytetem 10.",
-        "uk": "Додано підтримку диспетчера сповіщень. Blockly тепер може надсилати сповіщення з пріоритетом 10.",
-        "zh-cn": "添加了对通知管理器的支持。 Blockly 现在可以发送优先级为 10 的通知。"
-      },
-      "0.3.0": {
-        "en": "The token is now stored encrypted",
-        "de": "Der Token wird nun verschlüsselt gespeichert",
-        "ru": "Токен теперь хранится в зашифрованном виде.",
-        "pt": "O token agora é armazenado criptografado",
-        "nl": "Het token wordt nu versleuteld opgeslagen",
-        "fr": "Le token est désormais stocké crypté",
-        "it": "Il token è ora archiviato crittografato",
-        "es": "El token ahora se almacena cifrado",
-        "pl": "Token jest teraz przechowywany w postaci zaszyfrowanej",
-        "uk": "Тепер маркер зберігається в зашифрованому вигляді",
-        "zh-cn": "令牌现在已加密存储"
-      },
-      "0.2.1": {
-        "en": "Optimized startup behavior when adapter is not configured",
-        "de": "Optimiertes Startverhalten, wenn der Adapter nicht konfiguriert ist",
-        "ru": "Оптимизировано поведение при запуске, когда адаптер не настроен.",
-        "pt": "Comportamento de inicialização otimizado quando o adaptador não está configurado",
-        "nl": "Geoptimaliseerd opstartgedrag wanneer de adapter niet is geconfigureerd",
-        "fr": "Comportement de démarrage optimisé lorsque l'adaptateur n'est pas configuré",
-        "it": "Comportamento di avvio ottimizzato quando l'adattatore non è configurato",
-        "es": "Comportamiento de inicio optimizado cuando el adaptador no está configurado",
-        "pl": "Zoptymalizowane zachowanie podczas uruchamiania, gdy adapter nie jest skonfigurowany",
-        "uk": "Оптимізовано поведінку при запуску, коли адаптер не налаштовано",
-        "zh-cn": "优化未配置适配器时的启动行为"
-      },
-      "0.2.0": {
-        "en": "Added timeout for http calls and updated dependency versions",
-        "de": "Timeout für http-Aufrufe hinzugefügt und Abhängigkeitsversionen aktualisiert",
-        "ru": "Добавлен тайм-аут для http-вызовов и обновлены версии зависимостей.",
-        "pt": "Adicionado tempo limite para chamadas http e versões de dependência atualizadas",
-        "nl": "Time-out toegevoegd voor http-oproepen en bijgewerkte afhankelijkheidsversies",
-        "fr": "Ajout d'un délai d'attente pour les appels http et mises à jour des versions de dépendance",
-        "it": "Aggiunto timeout per le chiamate http e versioni aggiornate delle dipendenze",
-        "es": "Tiempo de espera agregado para llamadas http y versiones de dependencia actualizadas",
-        "pl": "Dodano limit czasu dla wywołań HTTP i zaktualizowano wersje zależności",
-        "uk": "Додано час очікування для http-викликів і оновлені версії залежностей",
-        "zh-cn": "添加了 http 调用的超时并更新了依赖版本"
-      },
-      "0.1.0": {
-        "en": "Update to adapter-core 2.5.1",
-        "de": "Update auf adapter-core 2.5.1",
-        "ru": "Обновление до ядра адаптера 2.5.1",
-        "pt": "Atualização para adaptador-core 2.5.1",
-        "nl": "Update naar adapter-core 2.5.1",
-        "fr": "Mise à jour vers adapter-core 2.5.1",
-        "it": "Aggiornamento a adapter-core 2.5.1",
-        "es": "Actualizar a adaptador-core 2.5.1",
-        "pl": "Aktualizacja do rdzenia adaptera 2.5.1",
-        "uk": "Оновлення до адаптера ядра 2.5.1",
-        "zh-cn": "更新到适配器核心 2.5.1"
-      }
-    },
-    "titleLang": {
-      "en": "Gotify",
-      "de": "Gotify",
-      "ru": "Gotify",
-      "pt": "Gotify",
-      "nl": "Gotify",
-      "fr": "Gotify",
-      "it": "Gotify",
-      "es": "Gotify",
-      "pl": "Gotify",
-      "uk": "Gotify",
-      "zh-cn": "Gotify"
-    },
-    "desc": {
-      "en": "This adapter allows you to send push notifications using gotify",
-      "de": "Dieser Adapter ermöglicht das Versenden von Push-Benachrichtigungen über gotify",
-      "ru": "Этот адаптер позволяет отправлять push-уведомления с помощью gotify",
-      "pt": "Este adaptador permite que você envie notificações push usando gotify",
-      "nl": "Deze adapter laat je inlichtingen sturen met behulp van versterking",
-      "fr": "Cet adaptateur vous permet d'envoyer des notifications push en utilisant gotify",
-      "it": "Questo adattatore consente di inviare notifiche push utilizzando gotify",
-      "es": "Este adaptador le permite enviar notificaciones push usando gotify",
-      "pl": "Ta adapter pozwala na wysłanie powiadomień o użyciu gotyfikacji",
-      "uk": "Цей адаптер дозволяє надсилати повідомлення на поштовх, використовуючи",
-      "zh-cn": "这种适应者使你能够向你发出动议的通知,以便你能够通过批准。"
-    },
-    "authors": [
-      "Thomas Pohl <post@thomaspohl.net>"
-    ],
-    "keywords": [
-      "gotify",
-      "notification",
-      "communication"
-    ],
-    "licenseInformation": {
-      "license": "Apache-2.0",
-      "type": "free"
-    },
-    "platform": "Javascript/Node.js",
-    "icon": "gotify.png",
-    "extIcon": "https://raw.githubusercontent.com/ThomasPohl/ioBroker.gotify/master/admin/gotify.png",
-    "readme": "https://github.com/ThomasPohl/ioBroker.gotify/blob/master/README.md",
-    "loglevel": "info",
-    "mode": "daemon",
-    "type": "messaging",
-    "compact": true,
-    "connectionType": "cloud",
-    "dataSource": "push",
-    "blockly": true,
-    "messagebox": true,
-    "stopBeforeUpdate": true,
-    "tier": 2,
-    "adminUI": {
-      "config": "json"
-    },
-    "dependencies": [
-      {
-        "js-controller": ">=6.0.11"
-      }
-    ],
-    "globalDependencies": [
-      {
-        "admin": ">=7.6.17"
-      }
-    ],
-    "supportedMessages": {
-      "custom": true,
-      "notifications": true
-    }
-  },
-  "native": {
-    "url": "",
-    "token": ""
-  },
-  "protectedNative": [
-    "token"
-  ],
-  "encryptedNative": [
-    "token"
-  ],
-  "objects": [],
-  "instanceObjects": [
-    {
-      "_id": "info.connection",
-      "type": "state",
-      "common": {
-        "name": {
-          "en": "Connection to Gotify server",
-          "de": "Verbindung mit Gotify Server",
-          "ru": "Подключен к серверу Gotify",
-          "pt": "Conectado ao servidor Gotify",
-          "nl": "Verbinding met Gotify server",
-          "fr": "Connecté au serveur Gotify",
-          "it": "Collegato al server Gotify",
-          "es": "Conectado al servidor Gotify",
-          "pl": "Łączy się z serwerem Gotify"
+    "common": {
+        "name": "gotify",
+        "version": "0.5.0",
+        "news": {
+            "0.5.0": {
+                "en": "Allow to overwrite token when sending messages (javascript only not for blockly)\nUpdate dependencies",
+                "de": "Lassen Sie Token beim Senden von Nachrichten überschreiben (javascript nur nicht für blockweise)\nAbhängigkeiten aktualisieren",
+                "ru": "Разрешить перезаписывать токен при отправке сообщений (javascript только не для блокировки)\nОбновление зависимостей",
+                "pt": "Permitir sobrescrever o token ao enviar mensagens (javascript apenas não para blockly)\nAtualizar dependências",
+                "nl": "Token overschrijven bij het versturen van berichten (javascript alleen niet voor blokjes)\nAfhankelijkheden bijwerken",
+                "fr": "Permettre d'écraser le jeton lors de l'envoi de messages (javascript seulement pas pour bloquer)\nMise à jour des dépendances",
+                "it": "Consentire di sovrascrivere token quando si inviano messaggi (javascript solo non per blocco)\nDipendenze di aggiornamento",
+                "es": "Permitir overwrite token al enviar mensajes (javascript solamente no por bloqueo)\nActualizar las dependencias",
+                "pl": "Pozwól nadpisać token podczas wysyłania wiadomości (javascript tylko nie dla blockly)\nAktualizuj zależności",
+                "uk": "Дозволяє перезаписувати токени при надсиланні повідомлень (javascript only not for blockly)\nОновлення залежності",
+                "zh-cn": "允许在发送信件时覆盖符号( javascript 仅用于块状)\n更新依赖关系"
+            },
+            "0.4.0": {
+                "en": "Support for notification-manager was added. Blockly can  now send notifications with priority 10.",
+                "de": "Unterstützung für Notification-Manager wurde hinzugefügt. Blockly kann jetzt Benachrichtigungen mit der Priorität 10 versenden.",
+                "ru": "Добавлена ​​поддержка менеджера уведомлений. Blockly теперь может отправлять уведомления с приоритетом 10.",
+                "pt": "Suporte para gerenciador de notificação foi adicionado. Blockly agora pode enviar notificações com prioridade 10.",
+                "nl": "Ondersteuning voor notificatiemanager is toegevoegd. Blockly kan nu notificaties versturen met prioriteit 10.",
+                "fr": "La prise en charge du gestionnaire de notifications a été ajoutée. Blockly peut désormais envoyer des notifications avec la priorité 10.",
+                "it": "È stato aggiunto il supporto per il gestore delle notifiche. Blockly ora può inviare notifiche con priorità 10.",
+                "es": "Se agregó soporte para el administrador de notificaciones. Blockly ahora puede enviar notificaciones con prioridad 10.",
+                "pl": "Dodano obsługę menedżera powiadomień. Blockly może teraz wysyłać powiadomienia z priorytetem 10.",
+                "uk": "Додано підтримку диспетчера сповіщень. Blockly тепер може надсилати сповіщення з пріоритетом 10.",
+                "zh-cn": "添加了对通知管理器的支持。 Blockly 现在可以发送优先级为 10 的通知。"
+            },
+            "0.3.0": {
+                "en": "The token is now stored encrypted",
+                "de": "Der Token wird nun verschlüsselt gespeichert",
+                "ru": "Токен теперь хранится в зашифрованном виде.",
+                "pt": "O token agora é armazenado criptografado",
+                "nl": "Het token wordt nu versleuteld opgeslagen",
+                "fr": "Le token est désormais stocké crypté",
+                "it": "Il token è ora archiviato crittografato",
+                "es": "El token ahora se almacena cifrado",
+                "pl": "Token jest teraz przechowywany w postaci zaszyfrowanej",
+                "uk": "Тепер маркер зберігається в зашифрованому вигляді",
+                "zh-cn": "令牌现在已加密存储"
+            },
+            "0.2.1": {
+                "en": "Optimized startup behavior when adapter is not configured",
+                "de": "Optimiertes Startverhalten, wenn der Adapter nicht konfiguriert ist",
+                "ru": "Оптимизировано поведение при запуске, когда адаптер не настроен.",
+                "pt": "Comportamento de inicialização otimizado quando o adaptador não está configurado",
+                "nl": "Geoptimaliseerd opstartgedrag wanneer de adapter niet is geconfigureerd",
+                "fr": "Comportement de démarrage optimisé lorsque l'adaptateur n'est pas configuré",
+                "it": "Comportamento di avvio ottimizzato quando l'adattatore non è configurato",
+                "es": "Comportamiento de inicio optimizado cuando el adaptador no está configurado",
+                "pl": "Zoptymalizowane zachowanie podczas uruchamiania, gdy adapter nie jest skonfigurowany",
+                "uk": "Оптимізовано поведінку при запуску, коли адаптер не налаштовано",
+                "zh-cn": "优化未配置适配器时的启动行为"
+            },
+            "0.2.0": {
+                "en": "Added timeout for http calls and updated dependency versions",
+                "de": "Timeout für http-Aufrufe hinzugefügt und Abhängigkeitsversionen aktualisiert",
+                "ru": "Добавлен тайм-аут для http-вызовов и обновлены версии зависимостей.",
+                "pt": "Adicionado tempo limite para chamadas http e versões de dependência atualizadas",
+                "nl": "Time-out toegevoegd voor http-oproepen en bijgewerkte afhankelijkheidsversies",
+                "fr": "Ajout d'un délai d'attente pour les appels http et mises à jour des versions de dépendance",
+                "it": "Aggiunto timeout per le chiamate http e versioni aggiornate delle dipendenze",
+                "es": "Tiempo de espera agregado para llamadas http y versiones de dependencia actualizadas",
+                "pl": "Dodano limit czasu dla wywołań HTTP i zaktualizowano wersje zależności",
+                "uk": "Додано час очікування для http-викликів і оновлені версії залежностей",
+                "zh-cn": "添加了 http 调用的超时并更新了依赖版本"
+            },
+            "0.1.0": {
+                "en": "Update to adapter-core 2.5.1",
+                "de": "Update auf adapter-core 2.5.1",
+                "ru": "Обновление до ядра адаптера 2.5.1",
+                "pt": "Atualização para adaptador-core 2.5.1",
+                "nl": "Update naar adapter-core 2.5.1",
+                "fr": "Mise à jour vers adapter-core 2.5.1",
+                "it": "Aggiornamento a adapter-core 2.5.1",
+                "es": "Actualizar a adaptador-core 2.5.1",
+                "pl": "Aktualizacja do rdzenia adaptera 2.5.1",
+                "uk": "Оновлення до адаптера ядра 2.5.1",
+                "zh-cn": "更新到适配器核心 2.5.1"
+            }
         },
-        "type": "boolean",
-        "role": "indicator.connected",
-        "read": true,
-        "write": false,
-        "def": false
-      },
-      "native": {}
-    }
-  ]
+        "titleLang": {
+            "en": "Gotify",
+            "de": "Gotify",
+            "ru": "Gotify",
+            "pt": "Gotify",
+            "nl": "Gotify",
+            "fr": "Gotify",
+            "it": "Gotify",
+            "es": "Gotify",
+            "pl": "Gotify",
+            "uk": "Gotify",
+            "zh-cn": "Gotify"
+        },
+        "desc": {
+            "en": "This adapter allows you to send push notifications using gotify",
+            "de": "Dieser Adapter ermöglicht das Versenden von Push-Benachrichtigungen über gotify",
+            "ru": "Этот адаптер позволяет отправлять push-уведомления с помощью gotify",
+            "pt": "Este adaptador permite que você envie notificações push usando gotify",
+            "nl": "Deze adapter laat je inlichtingen sturen met behulp van versterking",
+            "fr": "Cet adaptateur vous permet d'envoyer des notifications push en utilisant gotify",
+            "it": "Questo adattatore consente di inviare notifiche push utilizzando gotify",
+            "es": "Este adaptador le permite enviar notificaciones push usando gotify",
+            "pl": "Ta adapter pozwala na wysłanie powiadomień o użyciu gotyfikacji",
+            "uk": "Цей адаптер дозволяє надсилати повідомлення на поштовх, використовуючи",
+            "zh-cn": "这种适应者使你能够向你发出动议的通知,以便你能够通过批准。"
+        },
+        "authors": ["Thomas Pohl <post@thomaspohl.net>"],
+        "keywords": ["gotify", "notification", "communication"],
+        "licenseInformation": {
+            "license": "Apache-2.0",
+            "type": "free"
+        },
+        "platform": "Javascript/Node.js",
+        "icon": "gotify.png",
+        "extIcon": "https://raw.githubusercontent.com/ThomasPohl/ioBroker.gotify/master/admin/gotify.png",
+        "readme": "https://github.com/ThomasPohl/ioBroker.gotify/blob/master/README.md",
+        "loglevel": "info",
+        "mode": "daemon",
+        "type": "messaging",
+        "compact": true,
+        "connectionType": "cloud",
+        "dataSource": "push",
+        "blockly": true,
+        "messagebox": true,
+        "stopBeforeUpdate": true,
+        "tier": 2,
+        "adminUI": {
+            "config": "json"
+        },
+        "dependencies": [
+            {
+                "js-controller": ">=6.0.11"
+            }
+        ],
+        "globalDependencies": [
+            {
+                "admin": ">=7.6.20"
+            }
+        ],
+        "supportedMessages": {
+            "custom": true,
+            "notifications": true
+        }
+    },
+    "native": {
+        "url": "",
+        "token": "",
+        "tokens": []
+    },
+    "protectedNative": ["token", "tokens.token"],
+    "encryptedNative": ["token", "tokens.token"],
+    "objects": [],
+    "instanceObjects": [
+        {
+            "_id": "info.connection",
+            "type": "state",
+            "common": {
+                "name": {
+                    "en": "Connection to Gotify server",
+                    "de": "Verbindung mit Gotify Server",
+                    "ru": "Подключен к серверу Gotify",
+                    "pt": "Conectado ao servidor Gotify",
+                    "nl": "Verbinding met Gotify server",
+                    "fr": "Connecté au serveur Gotify",
+                    "it": "Collegato al server Gotify",
+                    "es": "Conectado al servidor Gotify",
+                    "pl": "Łączy się z serwerem Gotify"
+                },
+                "type": "boolean",
+                "role": "indicator.connected",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        }
+    ]
 }
