@@ -1,0 +1,9 @@
+{
+    "Main settings": "Adapter settings for gotify",
+    "Url": "Url",
+    "gotify adapter settings": "Adapter settings for gotify",
+    "token": "Token of application",
+    "tokenHelp": "Token of the application created in Gotify. You can create a new application in the Gotify web interface.",
+    "url": "Url",
+    "urlHelp": "Url of the Gotify server. Example: http://gotify.example.com:8080"
+}
