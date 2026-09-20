@@ -1,9 +1,6 @@
 {
     "Main settings": "Configuración del adaptador para gotify",
-    "Token": "Simbólico",
-    "Token of application": "token de aplicación",
     "Url": "URL",
-    "Url of Gotify server - http(s)://host(:port)": "Url del servidor Gotify - http(s)://host(:puerto)",
     "gotify adapter settings": "Configuración del adaptador para gotify",
     "token": "Token de aplicación",
     "tokenHelp": "Token de la aplicación creada en Gotify. Puede crear una nueva aplicación en la interfaz web de Gotify.",

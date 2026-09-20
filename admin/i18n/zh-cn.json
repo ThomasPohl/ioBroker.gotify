@@ -1,9 +1,6 @@
 {
     "Main settings": "Gotify 的适配器设置",
-    "Token": "代币",
-    "Token of application": "应用令牌",
     "Url": "网址",
-    "Url of Gotify server - http(s)://host(:port)": "Gotify 服务器的 URL - http(s)://host(:port)",
     "gotify adapter settings": "gotify 的适配器设置",
     "token": "应用令牌",
     "tokenHelp": "在 Gotify 中创建的应用程序的令牌。您可以在 Gotify Web 界面中创建新应用程序。",
