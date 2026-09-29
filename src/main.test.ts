@@ -1,204 +1,111 @@
-/**
- * This is a dummy TypeScript test file using chai and mocha
- *
- * It's automatically excluded from npm and its build output is excluded from both git and npm.
- * It is advised to test all your modules with accompanying *.test.ts-files
- */
-
 import axios from 'axios';
 import { expect } from 'chai';
+import proxyquire from 'proxyquire';
 import * as sinon from 'sinon';
 
-// Mock ioBroker adapter-core
-const mockAdapter = {
-    on: sinon.stub(),
-    log: {
+class MockAdapter {
+    public config: { url: string; token: string };
+    public name = 'gotify';
+    public instance = 0;
+    public log = {
         debug: sinon.stub(),
         info: sinon.stub(),
         warn: sinon.stub(),
         error: sinon.stub(),
-    },
-    setState: sinon.stub().resolves(),
-    getForeignObjectAsync: sinon.stub().resolves(),
-    extendForeignObject: sinon.stub(),
-    sendTo: sinon.stub(),
-    decrypt: sinon.stub().returnsArg(0),
-    encrypt: sinon.stub().returnsArg(0),
-    supportsFeature: sinon.stub().returns(false),
-    config: {
-        url: 'https://gotify.example.com',
-        token: 'test-token-123',
-    },
-    name: 'gotify',
-    instance: 0,
-};
+    };
+    public setState = sinon.stub().resolves();
+    public getForeignObjectAsync = sinon.stub().resolves(null);
+    public extendForeignObjectAsync = sinon.stub().resolves();
+    public sendTo = sinon.stub();
+    public decrypt = sinon.stub().callsFake((value: string) => value);
+    public encrypt = sinon.stub().callsFake((value: string) => `$/aes-${value}`);
+    public supportsFeature = sinon.stub().returns(true);
+    public on = sinon.stub();
 
-describe('Gotify Adapter => sendMessage', () => {
+    public constructor(options: { config?: { url: string; token: string } }) {
+        this.config = options.config ?? { url: 'https://gotify.example.com', token: 'test-token-123' };
+    }
+}
+
+const createAdapter: (options?: { config?: { url: string; token: string } }) => any = proxyquire.noCallThru()(
+    './main',
+    {
+        '@iobroker/adapter-core': { Adapter: MockAdapter },
+    },
+);
+
+describe('Gotify adapter', () => {
     let axiosPostStub: sinon.SinonStub;
+    let axiosGetStub: sinon.SinonStub;
 
     beforeEach(() => {
-        axiosPostStub = sinon.stub(axios, 'post');
-        sinon.resetHistory();
+        axiosPostStub = sinon.stub(axios, 'post').resolves({ data: { id: 1 } });
+        axiosGetStub = sinon.stub(axios, 'get').resolves({ data: { health: 'OK' } });
     });
 
     afterEach(() => {
         axiosPostStub.restore();
+        axiosGetStub.restore();
     });
 
-    it('should send a message with default token', async () => {
-        axiosPostStub.resolves({ data: { id: 1 } });
+    it('sends the token in the auth header and awaits successful delivery', async () => {
+        const adapter = createAdapter();
+        const sent = await adapter.sendMessage({ title: 'Test', message: 'Hello', priority: 5 });
 
-        const message = {
-            title: 'Test Title',
-            message: 'Test Message',
-            priority: 5,
-            contentType: 'text/plain',
-        };
-
-        // Direct test of the sendMessage function
-        const url = `${mockAdapter.config.url}/message?token=${mockAdapter.config.token}`;
-        await axios.post(url, {
-            title: message.title,
-            message: message.message,
-            priority: message.priority,
+        expect(sent).to.equal(true);
+        expect(axiosPostStub.firstCall.args[0]).to.equal('https://gotify.example.com/message');
+        expect(axiosPostStub.firstCall.args[1]).not.to.have.property('token');
+        expect(axiosPostStub.firstCall.args[2]).to.deep.include({
             timeout: 1000,
-            extras: {
-                'client::display': {
-                    contentType: message.contentType,
-                },
-            },
-        });
-
-        expect(axiosPostStub.calledOnce).to.be.true;
-        expect(axiosPostStub.firstCall.args[0]).to.equal('https://gotify.example.com/message?token=test-token-123');
-        expect(axiosPostStub.firstCall.args[1]).to.deep.include({
-            title: 'Test Title',
-            message: 'Test Message',
-            priority: 5,
+            headers: { 'X-Gotify-Key': 'test-token-123' },
         });
     });
 
-    it('should send a message with custom token', async () => {
-        axiosPostStub.resolves({ data: { id: 1 } });
-
+    it('does not expose a failed request token in logs or the URL', async () => {
         const customToken = 'custom-token-456';
-        const message = {
-            title: 'Test Title',
-            message: 'Test Message',
-            priority: 3,
-            contentType: 'text/markdown',
-            token: customToken,
-        };
+        const adapter = createAdapter();
+        axiosPostStub.rejects(new Error('Network Error'));
 
-        const url = `${mockAdapter.config.url}/message?token=${customToken}`;
-        await axios.post(url, {
-            title: message.title,
-            message: message.message,
-            priority: message.priority,
-            timeout: 1000,
-            extras: {
-                'client::display': {
-                    contentType: message.contentType,
-                },
-            },
+        const sent = await adapter.sendMessage({ message: 'Hello', token: customToken });
+
+        expect(sent).to.equal(false);
+        expect(axiosPostStub.firstCall.args[0]).not.to.include(customToken);
+        expect(adapter.log.error.firstCall.args.join(' ')).not.to.include(customToken);
+    });
+
+    it('migrates a plaintext token without replacing the runtime token', async () => {
+        const adapter = createAdapter({ config: { url: 'https://gotify.example.com', token: 'plain-token' } });
+        const instanceObject = { native: { token: 'plain-token' } };
+        adapter.getForeignObjectAsync.resolves(instanceObject);
+
+        await adapter.encryptPrivateKeyIfNeeded();
+
+        expect(adapter.config.token).to.equal('plain-token');
+        expect(instanceObject.native.token).to.equal('$/aes-plain-token');
+        expect(adapter.extendForeignObjectAsync.calledOnce).to.equal(true);
+    });
+
+    it('reports send completion in the message callback', async () => {
+        const adapter = createAdapter();
+        axiosPostStub.rejects(new Error('Network Error'));
+
+        await adapter.onMessage({
+            command: 'send',
+            message: { title: 'Test', message: 'Hello' },
+            from: 'javascript.0',
+            callback: 1,
         });
 
-        expect(axiosPostStub.calledOnce).to.be.true;
-        expect(axiosPostStub.firstCall.args[0]).to.equal('https://gotify.example.com/message?token=custom-token-456');
+        expect(adapter.sendTo.firstCall.args[2]).to.deep.equal({ sent: false });
     });
 
-    it('should handle different priority levels', async () => {
-        axiosPostStub.resolves({ data: { id: 1 } });
+    it('checks server availability without logging the configured token', async () => {
+        const adapter = createAdapter();
 
-        const priorities = [0, 1, 5, 10];
+        await adapter.onReady();
 
-        for (const priority of priorities) {
-            axiosPostStub.resetHistory();
-
-            const message = {
-                title: 'Test',
-                message: 'Test Message',
-                priority: priority,
-                contentType: 'text/plain',
-            };
-
-            const url = `${mockAdapter.config.url}/message?token=${mockAdapter.config.token}`;
-            await axios.post(url, {
-                title: message.title,
-                message: message.message,
-                priority: message.priority,
-                timeout: 1000,
-                extras: {
-                    'client::display': {
-                        contentType: message.contentType,
-                    },
-                },
-            });
-
-            expect(axiosPostStub.firstCall.args[1].priority).to.equal(priority);
-        }
-    });
-
-    it('should handle different content types', async () => {
-        axiosPostStub.resolves({ data: { id: 1 } });
-
-        const contentTypes = ['text/plain', 'text/markdown'];
-
-        for (const contentType of contentTypes) {
-            axiosPostStub.resetHistory();
-
-            const message = {
-                title: 'Test',
-                message: 'Test Message',
-                priority: 5,
-                contentType: contentType,
-            };
-
-            const url = `${mockAdapter.config.url}/message?token=${mockAdapter.config.token}`;
-            await axios.post(url, {
-                title: message.title,
-                message: message.message,
-                priority: message.priority,
-                timeout: 1000,
-                extras: {
-                    'client::display': {
-                        contentType: message.contentType,
-                    },
-                },
-            });
-
-            expect(axiosPostStub.firstCall.args[1].extras['client::display'].contentType).to.equal(contentType);
-        }
-    });
-
-    it('should handle axios errors gracefully', async () => {
-        const error = new Error('Network Error');
-        axiosPostStub.rejects(error);
-
-        const message = {
-            title: 'Test',
-            message: 'Test Message',
-            priority: 5,
-            contentType: 'text/plain',
-        };
-
-        try {
-            const url = `${mockAdapter.config.url}/message?token=${mockAdapter.config.token}`;
-            await axios.post(url, {
-                title: message.title,
-                message: message.message,
-                priority: message.priority,
-                timeout: 1000,
-                extras: {
-                    'client::display': {
-                        contentType: message.contentType,
-                    },
-                },
-            });
-        } catch (err) {
-            expect(err).to.equal(error);
-        }
-
-        expect(axiosPostStub.calledOnce).to.be.true;
+        expect(axiosGetStub.firstCall.args[0]).to.equal('https://gotify.example.com/health');
+        expect(adapter.setState.calledWith('info.connection', true, true)).to.equal(true);
+        expect(JSON.stringify(adapter.log.debug.args)).not.to.include('test-token-123');
     });
 });

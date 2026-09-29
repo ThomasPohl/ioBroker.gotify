@@ -32,31 +32,40 @@ class Gotify extends utils.Adapter {
 
         // The adapters config (in the instance object everything under the attribute "native") is accessible via
         // this.config:
-        this.log.debug(`config url: ${this.config.url}`);
-        this.log.debug(`config token: ${this.config.token}`);
-        if (!this.supportsFeature || !this.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
+        if (this.config.token && (!this.supportsFeature || !this.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE'))) {
             this.config.token = this.decrypt(this.config.token);
         }
+        await this.encryptPrivateKeyIfNeeded();
         if (this.config.url && this.config.token) {
-            await this.setState('info.connection', true, true);
-            this.log.info('Gotify adapter configured');
+            try {
+                await axios.get(`${this.config.url.replace(/\/+$/, '')}/health`, { timeout: 1000 });
+                await this.setState('info.connection', true, true);
+                this.log.info('Gotify adapter configured');
+            } catch (error) {
+                await this.setState('info.connection', false, true);
+                this.log.warn(
+                    `Could not connect to Gotify server: ${error instanceof Error ? error.message : String(error)}`,
+                );
+            }
         } else {
             await this.setState('info.connection', false, true);
             this.log.warn('Gotify adapter not configured');
         }
-        await this.encryptPrivateKeyIfNeeded();
     }
 
     private async encryptPrivateKeyIfNeeded(): Promise<void> {
-        if (this.config.token && this.config.token.length > 0) {
-            await this.getForeignObjectAsync(`system.adapter.${this.name}.${this.instance}`).then(data => {
-                if (data && data.native && data.native.token && !data.native.token.startsWith('$/aes')) {
-                    this.config.token = data.native.privateKey;
-                    data.native.token = this.encrypt(data.native.token);
-                    this.extendForeignObject(`system.adapter.${this.name}.${this.instance}`, data);
-                    this.log.info('privateKey is stored now encrypted');
-                }
-            });
+        const instanceId = `system.adapter.${this.name}.${this.instance}`;
+        const instanceObject = await this.getForeignObjectAsync(instanceId);
+        const storedToken = instanceObject?.native?.token;
+        if (
+            instanceObject &&
+            typeof storedToken === 'string' &&
+            storedToken.length > 0 &&
+            !storedToken.startsWith('$/aes')
+        ) {
+            instanceObject.native.token = this.encrypt(storedToken);
+            await this.extendForeignObjectAsync(instanceId, instanceObject);
+            this.log.info('Gotify token is now stored encrypted');
         }
     }
 
@@ -74,31 +83,28 @@ class Gotify extends utils.Adapter {
         }
     }
 
-    private onMessage(obj: ioBroker.Message): void {
+    private async onMessage(obj: ioBroker.Message): Promise<void> {
         if (typeof obj === 'object' && obj.message) {
             if (obj.command === 'send') {
-                this.sendMessage(obj.message as GotifyMessage);
-                // Send response in callback if required
+                const sent = await this.sendMessage(obj.message as GotifyMessage);
                 if (obj.callback) {
-                    this.sendTo(obj.from, obj.command, 'Message received', obj.callback);
+                    this.sendTo(obj.from, obj.command, { sent }, obj.callback);
                 }
             } else if (obj.command === 'sendNotification') {
-                this.processNotification(obj);
+                await this.processNotification(obj);
             }
         }
     }
 
-    private processNotification(obj: ioBroker.Message): void {
-        const notificationMessage: GotifyMessage = this.formatNotification(obj.message);
+    private async processNotification(obj: ioBroker.Message): Promise<void> {
+        let sent = false;
         try {
-            this.sendMessage(notificationMessage);
-            if (obj.callback) {
-                this.sendTo(obj.from, 'sendNotification', { sent: true }, obj.callback);
-            }
+            sent = await this.sendMessage(this.formatNotification(obj.message));
         } catch {
-            if (obj.callback) {
-                this.sendTo(obj.from, 'sendNotification', { sent: false }, obj.callback);
-            }
+            sent = false;
+        }
+        if (obj.callback) {
+            this.sendTo(obj.from, 'sendNotification', { sent }, obj.callback);
         }
     }
 
@@ -135,32 +141,40 @@ class Gotify extends utils.Adapter {
         }
     }
 
-    private sendMessage(message: GotifyMessage): void {
-        if (this.config.url && this.config.token) {
-            let token = this.config.token;
-            if (message.token) {
-                token = message.token;
-            }
-            axios
-                .post(`${this.config.url}/message?token=${token}`, {
-                    title: message.title,
-                    message: message.message,
-                    priority: message.priority,
-                    timeout: 1000,
-                    extras: {
-                        'client::display': {
-                            contentType: message.contentType,
+    private async sendMessage(message: GotifyMessage): Promise<boolean> {
+        const token = message.token || this.config.token;
+        if (this.config.url && token) {
+            try {
+                await axios.post(
+                    `${this.config.url.replace(/\/+$/, '')}/message`,
+                    {
+                        title: message.title,
+                        message: message.message,
+                        priority: message.priority,
+                        extras: {
+                            'client::display': {
+                                contentType: message.contentType,
+                            },
                         },
                     },
-                })
-                .then(() => {
-                    this.log.debug('Successfully sent message to gotify');
-                })
-                .catch(error => {
-                    this.log.error(`Error while sending message to gotify:${JSON.stringify(error)}`);
-                });
+                    {
+                        timeout: 1000,
+                        headers: { 'X-Gotify-Key': token },
+                    },
+                );
+                await this.setState('info.connection', true, true);
+                this.log.debug('Successfully sent message to gotify');
+                return true;
+            } catch (error) {
+                await this.setState('info.connection', false, true);
+                this.log.error(
+                    `Error while sending message to gotify: ${error instanceof Error ? error.message : String(error)}`,
+                );
+                return false;
+            }
         } else {
-            this.log.error(`Cannot send notification while not configured:${JSON.stringify(message)}`);
+            this.log.error('Cannot send notification while Gotify is not configured');
+            return false;
         }
     }
     private getLatestMessage(messages: any): string {
