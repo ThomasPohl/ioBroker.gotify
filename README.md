@@ -21,8 +21,7 @@ Send push notifications from [ioBroker](https://iobroker.net/) to [Gotify](https
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.6.0 (2026-09-29)
 
 - (Thomas Pohl) Adapter requires node.js >= 22 now
 - (Thomas Pohl) Check the Gotify health endpoint on startup before marking the adapter connected
@@ -47,11 +46,6 @@ Send push notifications from [ioBroker](https://iobroker.net/) to [Gotify](https
 ### 0.2.1
 
 - (Thomas Pohl) Optimized startup behavior when adapter is not configured
-
-### 0.2.0
-
-- (Thomas Pohl) Add timeout for http calls
-- (Thomas Pohl) Update dependency versions
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 

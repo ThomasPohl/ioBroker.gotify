@@ -1,4 +1,9 @@
 # Older changes
+## 0.2.0
+
+- (Thomas Pohl) Add timeout for http calls
+- (Thomas Pohl) Update dependency versions
+
 ## 0.1.0
 
 - (Thomas Pohl) Update to adapter-core 2.5.1
