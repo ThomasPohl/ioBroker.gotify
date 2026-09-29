@@ -59,18 +59,21 @@ describe('Gotify adapter', () => {
             timeout: 1000,
             headers: { 'X-Gotify-Key': 'test-token-123' },
         });
+        expect(adapter.setState.calledWith('info.lastSuccess', sinon.match.number, true)).to.equal(true);
+        expect(adapter.setState.calledWith('info.lastError', '', true)).to.equal(true);
     });
 
     it('does not expose a failed request token in logs or the URL', async () => {
         const customToken = 'custom-token-456';
         const adapter = createAdapter();
-        axiosPostStub.rejects(new Error('Network Error'));
+        axiosPostStub.rejects({ isAxiosError: true, response: { status: 401 } });
 
         const sent = await adapter.sendMessage({ message: 'Hello', token: customToken });
 
         expect(sent).to.equal(false);
         expect(axiosPostStub.firstCall.args[0]).not.to.include(customToken);
         expect(adapter.log.error.firstCall.args.join(' ')).not.to.include(customToken);
+        expect(adapter.setState.calledWith('info.lastError', 'HTTP 401', true)).to.equal(true);
     });
 
     it('migrates a plaintext token without replacing the runtime token', async () => {
@@ -105,7 +108,19 @@ describe('Gotify adapter', () => {
         await adapter.onReady();
 
         expect(axiosGetStub.firstCall.args[0]).to.equal('https://gotify.example.com/health');
+        expect(adapter.setState.firstCall.args).to.deep.equal(['info.connection', false, true]);
         expect(adapter.setState.calledWith('info.connection', true, true)).to.equal(true);
         expect(JSON.stringify(adapter.log.debug.args)).not.to.include('test-token-123');
+    });
+
+    it('keeps the adapter status off when the health check fails', async () => {
+        const adapter = createAdapter();
+        axiosGetStub.rejects({ isAxiosError: true, response: { status: 503 } });
+
+        await adapter.onReady();
+
+        expect(adapter.setState.calledWith('info.connection', false, true)).to.equal(true);
+        expect(adapter.setState.calledWith('info.connection', true, true)).to.equal(false);
+        expect(adapter.setState.calledWith('info.lastError', 'HTTP 503', true)).to.equal(true);
     });
 });

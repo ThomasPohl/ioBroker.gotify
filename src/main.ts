@@ -32,6 +32,7 @@ class Gotify extends utils.Adapter {
 
         // The adapters config (in the instance object everything under the attribute "native") is accessible via
         // this.config:
+        await this.setState('info.connection', false, true);
         if (this.config.token && (!this.supportsFeature || !this.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE'))) {
             this.config.token = this.decrypt(this.config.token);
         }
@@ -42,13 +43,11 @@ class Gotify extends utils.Adapter {
                 await this.setState('info.connection', true, true);
                 this.log.info('Gotify adapter configured');
             } catch (error) {
-                await this.setState('info.connection', false, true);
-                this.log.warn(
-                    `Could not connect to Gotify server: ${error instanceof Error ? error.message : String(error)}`,
-                );
+                const errorMessage = this.getSafeErrorMessage(error);
+                await this.setState('info.lastError', errorMessage, true);
+                this.log.warn(`Could not connect to Gotify server: ${errorMessage}`);
             }
         } else {
-            await this.setState('info.connection', false, true);
             this.log.warn('Gotify adapter not configured');
         }
     }
@@ -102,6 +101,7 @@ class Gotify extends utils.Adapter {
             sent = await this.sendMessage(this.formatNotification(obj.message));
         } catch {
             sent = false;
+            await this.setState('info.lastError', 'Unexpected error', true);
         }
         if (obj.callback) {
             this.sendTo(obj.from, 'sendNotification', { sent }, obj.callback);
@@ -163,20 +163,35 @@ class Gotify extends utils.Adapter {
                     },
                 );
                 await this.setState('info.connection', true, true);
+                await this.setState('info.lastSuccess', Date.now(), true);
+                await this.setState('info.lastError', '', true);
                 this.log.debug('Successfully sent message to gotify');
                 return true;
             } catch (error) {
+                const errorMessage = this.getSafeErrorMessage(error);
                 await this.setState('info.connection', false, true);
-                this.log.error(
-                    `Error while sending message to gotify: ${error instanceof Error ? error.message : String(error)}`,
-                );
+                await this.setState('info.lastError', errorMessage, true);
+                this.log.error(`Error while sending message to gotify: ${errorMessage}`);
                 return false;
             }
         } else {
+            await this.setState('info.connection', false, true);
+            await this.setState('info.lastError', 'Gotify is not configured', true);
             this.log.error('Cannot send notification while Gotify is not configured');
             return false;
         }
     }
+
+    private getSafeErrorMessage(error: unknown): string {
+        if (axios.isAxiosError(error)) {
+            if (error.response) {
+                return `HTTP ${error.response.status}`;
+            }
+            return error.code || 'Network error';
+        }
+        return 'Unexpected error';
+    }
+
     private getLatestMessage(messages: any): string {
         const latestMessage = messages.sort((a: any, b: any) => (a.ts < b.ts ? 1 : -1))[0];
 

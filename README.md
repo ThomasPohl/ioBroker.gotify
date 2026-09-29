@@ -23,7 +23,11 @@ Send push notifications from [ioBroker](https://iobroker.net/) to [Gotify](https
 -->
 
 ### **WORK IN PROGRESS**
-- (copilot) Adapter requires node.js >= 22 now
+
+- (Thomas Pohl) Adapter requires node.js >= 22 now
+- (Thomas Pohl) Check the Gotify health endpoint on startup before marking the adapter connected
+- (Thomas Pohl) Send tokens through the authentication header instead of exposing them in request URLs
+- (Thomas Pohl) Report actual send results and expose the last successful send and sanitized error
 
 ### 0.5.0 (2025-12-28)
 
