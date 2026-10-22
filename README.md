@@ -21,6 +21,11 @@ Send push notifications from [ioBroker](https://iobroker.net/) to [Gotify](https
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+- (Thomas Pohl) Fix Blockly generator registration for compatibility with current Blockly versions
+
 ### 0.6.0 (2026-09-29)
 
 - (Thomas Pohl) Adapter requires node.js >= 22 now
