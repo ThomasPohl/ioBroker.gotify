@@ -107,7 +107,7 @@ Blockly.Blocks['gotify'] = {
     },
 };
 
-Blockly.JavaScript['gotify'] = function (block) {
+var gotifyGenerator = function (block) {
     var dropdown_instance = block.getFieldValue('INSTANCE');
     var message = Blockly.JavaScript.valueToCode(block, 'MESSAGE', Blockly.JavaScript.ORDER_ATOMIC);
     var text = '{\n';
@@ -133,3 +133,9 @@ Blockly.JavaScript['gotify'] = function (block) {
 
     return `sendTo("gotify${dropdown_instance}", "send", ${text});\n`;
 };
+
+if (Blockly.JavaScript.forBlock) {
+    Blockly.JavaScript.forBlock['gotify'] = gotifyGenerator;
+} else {
+    Blockly.JavaScript['gotify'] = gotifyGenerator;
+}
