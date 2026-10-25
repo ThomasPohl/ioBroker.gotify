@@ -1,4 +1,8 @@
 # Older changes
+## 0.2.1
+
+- (Thomas Pohl) Optimized startup behavior when adapter is not configured
+
 ## 0.2.0
 
 - (Thomas Pohl) Add timeout for http calls
