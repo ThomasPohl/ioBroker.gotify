@@ -162,7 +162,8 @@
     ],
     "supportedMessages": {
       "custom": true,
-      "notifications": true
+      "notifications": true,
+      "help": true
     }
   },
   "native": {

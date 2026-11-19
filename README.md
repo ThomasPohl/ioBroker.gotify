@@ -21,6 +21,10 @@ Send push notifications from [ioBroker](https://iobroker.net/) to [Gotify](https
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+
+- (@GermanBluefox) Added the message "help": a description of all messages for AI agents (e.g. pi-agent), and common.supportedMessages.help
+
 ### 0.6.1 (2026-10-25)
 
 - (Thomas Pohl) Fix Blockly generator registration for compatibility with current Blockly versions
@@ -100,6 +104,12 @@ sendTo('gotify.0', 'send', {
     token: 'AaBbCcDdEeFfGg123456',
 });
 ```
+
+### Messages for scripts and AI agents
+
+`sendTo('gotify.0', 'help', {})` answers `{ help, commands }`: `help` describes the commands with their parameters
+in English, for AI agents (e.g. ioBroker.pi-agent) and script authors; `commands` lists every command with `write`
+(`true` when it sends something).
 
 ## Communication
 

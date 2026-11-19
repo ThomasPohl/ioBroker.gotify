@@ -4,6 +4,7 @@
 
 import * as utils from '@iobroker/adapter-core';
 import axios from 'axios';
+import { COMMANDS, HELP } from './lib/help';
 
 interface GotifyMessage {
     message?: string;
@@ -83,6 +84,13 @@ class Gotify extends utils.Adapter {
     }
 
     private async onMessage(obj: ioBroker.Message): Promise<void> {
+        if (typeof obj === 'object' && obj.command === 'help') {
+            // description of all commands for AI agents, also while Gotify is not reachable
+            if (obj.callback) {
+                this.sendTo(obj.from, obj.command, { help: HELP, commands: COMMANDS }, obj.callback);
+            }
+            return;
+        }
         if (typeof obj === 'object' && obj.message) {
             if (obj.command === 'send') {
                 const sent = await this.sendMessage(obj.message as GotifyMessage);
