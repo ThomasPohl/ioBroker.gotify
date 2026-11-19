@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { expect } from 'chai';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import proxyquire from 'proxyquire';
 import * as sinon from 'sinon';
+import { COMMANDS, HELP } from './lib/help';
 
 class MockAdapter {
     public config: { url: string; token: string };
@@ -100,6 +103,37 @@ describe('Gotify adapter', () => {
         });
 
         expect(adapter.sendTo.firstCall.args[2]).to.deep.equal({ sent: false });
+    });
+
+    it('answers help also without a configured server', async () => {
+        const adapter = createAdapter({ config: { url: '', token: '' } });
+
+        await adapter.onMessage({ command: 'help', message: {}, from: 'javascript.0', callback: 1 });
+
+        expect(adapter.sendTo.firstCall.args[2]).to.deep.equal({ help: HELP, commands: COMMANDS });
+        expect(axiosPostStub.called).to.equal(false);
+    });
+
+    it('lists in help exactly the commands onMessage answers', () => {
+        const source = fs.readFileSync(path.join(__dirname, 'main.ts'), 'utf8');
+        const handler = source.slice(
+            source.indexOf('private async onMessage('),
+            source.indexOf('private async processNotification('),
+        );
+        const answered = [...new Set([...handler.matchAll(/obj\.command === '([^']+)'/g)].map(m => m[1]))];
+        const names = COMMANDS.map(c => c.command);
+
+        expect(new Set(names).size).to.equal(names.length);
+        expect([...names].sort()).to.deep.equal(answered.sort());
+        for (const { command, write } of COMMANDS) {
+            expect(write, command).to.equal(command !== 'help');
+            if (command !== 'help') {
+                expect(HELP).to.include(`- ${command}`);
+            }
+        }
+        for (const line of HELP.split('\n')) {
+            expect(line.length, line).to.be.at.most(120);
+        }
     });
 
     it('checks server availability without logging the configured token', async () => {
